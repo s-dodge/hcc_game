@@ -1,0 +1,33 @@
+# python
+__pycache__/
+*.pyc
+*.pyo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment
+venv/
+.venv/
+env/
+
+# Packaging
+dist/
+build/
+*.egg-info/
+
+# Log files
+*.log
+
+# Temp folders
+temp/
+
+# Scratch files
+*scratch*.py
+*scratch*.txt
+notes.txt
+
+# reference files
+project.txt
+
