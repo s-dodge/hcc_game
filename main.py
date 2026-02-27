@@ -8,7 +8,7 @@ rooms = {
         "description": ("The bright, fluorescent lights here illuminate a tangle of old equipment...where did everyone go?"
         ),
         "exits": {"north": "storage", "east": "printing department", "south":"south hallway"},
-        "items": ["DDR5 Ram", "Workstation", "Broken Keyboard", "Bin of Mice"]
+        "items": ["stick of ddr5 ram", "workstation", "broken keyboard", "bin of mice"]
 
     },
     "south hallway":{
@@ -64,9 +64,12 @@ rooms = {
 
 # ITEMS
 item_descriptions = {
-    "pamphlet": "",
-    "book":"",
-    "keycard":""
+    "book":"An untouched copy of 'Windows 11 Inside Out'.",
+    "keycard":"The IT intern's keycard.",
+    "bin of mice":"A bin of real living mice...no that can't be. Of course, it's just computer mice.",
+    "workstation":"This workstation seems to be broken...maybe the intern was working on it...",
+    "broken keyboard":"This keyboard is broken. It looks like someone smashed it on their desk in frustration.",
+    "stick of ddr5 ram":"jackpot.",
 }
 
 # PLAYER STATE
@@ -93,6 +96,8 @@ def display_room(room_name):
     room = rooms[room_name]
     print(f"You are in the {room['name'].title()}")
     print(room["description"])
+    if room['items']:
+        print(f"You see a {', a '.join(room['items'])}.")
     print(f"Exits: {', '.join(room['exits'])}")
 
 def parse(raw):
@@ -100,6 +105,10 @@ def parse(raw):
     parts=raw.lower().strip().split(None, 1)
     verb = parts[0] if parts else ""
     noun = parts[1] if len(parts) > 1 else ""
+    for article in ("the ","a ", "an "):
+        if noun.startswith(article):
+            noun = noun[len(article):]
+            break
     return verb, noun
 
 def main():
@@ -136,19 +145,40 @@ def main():
             else:
                 print("You can't go that way")
 
+        elif verb == "look":
+            display_room(location)
+
+        elif verb == "examine":
+            if noun in item_descriptions:
+                print(item_descriptions[noun])
+            else:
+                print("You don't see that here.")
+
+        elif verb == "take":
+            if noun in rooms[location]["items"]:
+                rooms[location]["items"].remove(noun)
+                player["inventory"].append(noun)
+                print(f"\nYou pick up the {noun}. ")
+                print(f"\nThe {noun} is now in your inventory. ")
+            else:
+                print("\nYou don't see that here")
+        
+        elif verb == "drop":
+            if noun in player["inventory"]:
+                player["inventory"].remove(noun)
+                rooms[location]["items"].append(noun)
+                print(f"You drop the {noun}.")
+            else:
+                print("You aren't carrying that.")
+
+        elif verb == "inventory" or verb == "i":
+            if player["inventory"]:
+                print(f"Inventory: \n{', \n'.join(player['inventory'])}")
+            else:
+                print("You aren't carrying anything.")
+
         else:
             print("Command not recognized")
-
-
-
-
-
-
-
-
-
-
-
 
 
 

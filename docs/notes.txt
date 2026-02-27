@@ -1,0 +1,6 @@
+NOTES / DEFERRED IDEAS
+======================
+
+DISPLAY
+- display_room item list: use negative index to format as "a broken keyboard, a workstation, and a bin of mice" (Oxford comma, "and a" before last item)
+

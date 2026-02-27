@@ -1,0 +1,42 @@
+Text-Based Adventure Game — Project Brief
+Concept
+Eldritch horror / dark academia text adventure set at a community college. Tone is tongue-in-cheek — fluorescent lights and cellophane-wrapped library books subverting classic dark academia aesthetics — but the horror is genuine. Think Control or Night Vale as tonal references.
+Technical Stack
+
+Python, CLI/terminal
+pygame.mixer or mido for MIDI soundtrack (Satie's Gnossienne No. 1)
+Unicode/zalgo text for sanity effects
+VSCode with Pylance recommended
+
+Core Mechanics
+
+Standard text adventure: rooms, movement, items, inventory, parser
+CoC-inspired sanity system (loose, not strict rulebook): sanity as a 0-100 stat that gates descriptions and endings
+Sanity loss triggers corrupted text output via a filter function — zalgo, fragmentation, input corruption, unreliable narration
+
+Class Structure
+Room, Player, Item, Game — standard OOP architecture with a main game loop parsing verb/noun input.
+Roadmap
+
+Ugly working prototype (loop + basic I/O)
+Refactor into classes
+Build world/map
+Items and inventory
+Writing and flavor text
+Sanity system
+Polish (zalgo, MIDI, multiple endings)
+
+Resources
+
+Invent Your Own Computer Games with Python — Al Sweigart (free at inventwithpython.com)
+The Big Book of Small Python Projects — No Starch Press
+GitHub: search real implementations for structural reference
+
+Design Principles
+
+Borrow CoC vibe, not the rulebook
+Get it working → get it right → get it interesting
+Theme and mechanics are separable — story is just strings
+
+INSTRUCTIONS FOR CLAUDE:
+Do not provide explicit code unless instructed - use pseuedocode where appropriate and descriptions as a general guide.
