@@ -1,0 +1,69 @@
+SESSION SUMMARY
+===============
+Last updated: 2026-02-27
+
+WHERE WE ARE
+------------
+Working prototype is complete and functional. All core mechanics are in place
+for the IT building tutorial section. Code is in a single file: main.py.
+
+WHAT'S WORKING
+--------------
+- Room navigation: "go <direction>"
+- Room display with items and exits
+- Locked exits: parking lot door locked via locked_exits set
+- Commands: look, examine, take, drop, inventory (i)
+- parse() strips articles (the/a/an) from input
+- player dict tracks inventory and sanity (100)
+
+WHAT'S NEXT (in rough priority order)
+--------------------------------------
+1. Write room descriptions and atmosphere for IT building rooms
+2. Add IT closet room + keycard mechanic ("use keycard" unlocks it)
+3. Plan Library and Theatre buildings (main game, post-tutorial)
+4. Refactor into classes (Room, Player, Item, Game) — roadmap step 2
+5. Sanity system implementation
+6. Zalgo/unicode text corruption at low sanity
+7. MIDI soundtrack (pygame.mixer, Satie Gnossienne No. 1)
+8. Multiple endings
+
+DEFERRED / NOTES (see docs/notes.txt for full list)
+----------------------------------------------------
+- Oxford comma formatting for item lists in display_room
+- Truncated descriptions for already-visited rooms (visited_rooms set)
+- Sanity-gated item description tiers (normal → unsettling → wrong → incomprehensible)
+- Inventory corruption at low sanity (items rename themselves)
+- Item names fragment via zalgo before descriptions go eldritch
+- Save fake arms / phlebotomy room for Library or Theatre building
+
+KEY ARCHITECTURE NOTES
+-----------------------
+- rooms dict: keys are lowercase strings ("it department", "broken keyboard", etc.)
+- locked_exits: set of (room_name, direction) tuples — unlock with .discard()
+- item_descriptions: flat dict, keys must match room items list exactly (all lowercase)
+- location tracked as local variable in main(), NOT in player dict
+- parse() returns (verb, noun) — strips articles, lowercases everything
+
+MAP (IT Building)
+-----------------
+it department → north: storage, east: printing department, south: south hallway
+printing department → west: it department, east: east hallway
+east hallway → west: printing department, south: cafeteria
+south hallway → north: it department, east: cafeteria, west: parking lot (LOCKED), south: south stairwell
+storage → south: it department
+cafeteria → north: east hallway, west: south hallway, south: exit
+parking lot → east: south hallway
+south stairwell → north: south hallway, south: exit
+exit (Main Campus) → north: cafeteria, south: library, east: kepler theater
+
+STORY PREMISE
+-------------
+Player receives a service ticket. Arrives at HCC IT department to find it empty.
+Investigates. Finds keycard (belongs to missing intern) + broken workstation = inciting clue.
+IT building is tutorial. Library and Theatre are main game.
+Tone: tongue-in-cheek dark academia. Think Control / Night Vale.
+
+GITHUB
+------
+https://github.com/s-dodge/hcc_game.git
+Branch: master
