@@ -3,4 +3,15 @@ NOTES / DEFERRED IDEAS
 
 DISPLAY
 - display_room item list: use negative index to format as "a broken keyboard, a workstation, and a bin of mice" (Oxford comma, "and a" before last item)
+- display_room: show truncated/short description for already-visited rooms (track visited rooms in a set, show full description on first visit only)
+
+SANITY EFFECTS
+- Item descriptions change as sanity drops (examine checks sanity threshold, returns alternate description)
+- Multiple tiers: normal → unsettling → wrong → incomprehensible
+- Example: "bin of mice" examine text changes from "computer mice" to real mice at low sanity
+- Items may disappear from or change in inventory as sanity drops
+- Inventory corruption: items rename themselves at low sanity ("keycard" → "a tooth")
+- Item names in room display and inventory fragment via zalgo/unicode before descriptions go full eldritch
+- Non-euclidian topology, eldrich runes, blood coverage as description tiers
+- Consider a dict of sanity-gated alternate descriptions per item keyed by threshold, e.g. {75: "unsettling text", 50: "wrong text", 25: "incomprehensible text"}
 

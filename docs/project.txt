@@ -39,4 +39,4 @@ Get it working → get it right → get it interesting
 Theme and mechanics are separable — story is just strings
 
 INSTRUCTIONS FOR CLAUDE:
-Do not provide explicit code unless instructed - use pseuedocode where appropriate and descriptions as a general guide.
+Do not provide explicit code unless instructed - use pseudocode where appropriate and descriptions as a general guide.
