@@ -1,6 +1,6 @@
 SESSION SUMMARY
 ===============
-Last updated: 2026-02-28
+Last updated: 2026-02-28 (session 2)
 
 WHERE WE ARE
 ------------
@@ -16,23 +16,27 @@ WHAT'S WORKING
 - parse() strips articles (the/a/an) from input
 - player dict tracks inventory, sanity (100), and visited_rooms (set)
 - Typewriter effect: all narrative output via typewrite() in helpers.py
+  - Signature updated: typewrite(text, char_delay=0.03, line_delay=0.4)
+  - line_delay adds pause after newlines for better pacing
 - clear_screen() in helpers.py, called on game start
 - "brochure" renamed to "pamphlet"
+- "cafeteria" renamed to "atrium" throughout (rooms, exits, docs)
 
 WHAT'S NEXT (in rough priority order)
 --------------------------------------
-1. Write room descriptions and atmosphere for IT building rooms
-2. Add IT closet room + keycard mechanic ("use keycard" unlocks it)
-3. Plan Library and Theatre buildings (main game, post-tutorial)
-4. Refactor into classes (Room, Player, Item, Game) — roadmap step 2
-5. Sanity system implementation
+1. Class refactor (Room, Player, Item, Game) — do this BEFORE adding new mechanics
+2. Write room descriptions and atmosphere for remaining IT building rooms
+3. Help desk office: planned as player start room (stub already in main.py, commented out)
+4. Add "use" verb mechanic — item state (powered/unpowered etc.) belongs on Item objects
+5. Plan Library and Theatre buildings (main game, post-tutorial)
+6. Sanity system implementation
 6. Zalgo/unicode text corruption at low sanity
 7. MIDI soundtrack (pygame.mixer, Satie Gnossienne No. 1)
 8. Multiple endings
 
 DEFERRED / NOTES (see docs/notes.txt for full list)
 ----------------------------------------------------
-- Oxford comma formatting for item lists in display_room
+- Oxford comma formatting for item lists — deferred until after class refactor
 - Sanity-gated item description tiers (normal → unsettling → wrong → incomprehensible)
 - Inventory corruption at low sanity (items rename themselves)
 - Item names fragment via zalgo before descriptions go eldritch
@@ -48,7 +52,7 @@ KEY ARCHITECTURE NOTES
 - item_descriptions: flat dict, keys must match room items list exactly (all lowercase)
 - location tracked as local variable in main(), NOT in player dict
 - parse() returns (verb, noun) — strips articles, lowercases everything
-- helpers.py: typewrite(text, delay=0.03), clear_screen() — no game state dependencies
+- helpers.py: typewrite(text, char_delay=0.03, line_delay=0.4), clear_screen() — no game state dependencies
 - colorama imported but commented out — reserved for sanity/zalgo color effects
 
 MAP (IT Building)
@@ -65,10 +69,13 @@ exit (Main Campus) → north: atrium, south: library, east: kepler theater
 
 STORY PREMISE
 -------------
-Player receives a service ticket. Arrives at HCC IT department to find it empty.
+Player is generic IT staff. Receives a ServiceDesk ticket (urgent, passive-aggressive tone).
+Opening: rainy gray morning, player in their office, ticket appears on screen.
+Steps out to find the building empty — flickering lights, cryptic note(s) planned.
 Investigates. Finds keycard (belongs to missing intern) + broken workstation = inciting clue.
-IT building is tutorial. Library and Theatre are main game.
+IT building is tutorial. Library (LRC) and Theatre are main game.
 Tone: tongue-in-cheek dark academia. Think Control / Night Vale.
+Story draft in docs/story_notes.txt.
 
 GITHUB
 ------

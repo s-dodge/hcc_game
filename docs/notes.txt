@@ -8,7 +8,7 @@ DISPLAY LIBRARIES
 - `rich` is the stronger option if we want text corruption/color effects for sanity
 
 DISPLAY
-- display_room item list: use negative index to format as "a broken keyboard, a workstation, and a bin of mice" (Oxford comma, "and a" before last item)
+- display_room item list: use negative index to format as "a broken keyboard, a workstation, and a bin of mice" (Oxford comma, "and a" before last item) — deferred until after class refactor
 - display_room: show truncated/short description for already-visited rooms (track visited rooms in a set, show full description on first visit only)
 - Navigation/wayfinding: Consider more descriptive exit names with directional context (e.g., "north: parking lot", "south: atrium") OR use obvious room names like "parking lot", THEN reveal descriptive names after room has been visited (e.g., "Exits: north, east, south" becomes "Exits: north (storage), east (printing), south (hallway)" after visiting those rooms)
 - Indefinite article handling: Need "a" vs "an" logic for items (e.g., "a keyboard" vs "an error message")
