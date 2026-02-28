@@ -1,4 +1,7 @@
 # HCC Text-Based Adventure game by Soren M. Dodge | 2026
+# from colorama import init, Fore, Back
+from helpers import typewrite, clear_screen
+
 
 
 # WORLD
@@ -27,7 +30,7 @@ rooms = {
         "name":"printing department",
         "description":("The room is empty. Norm is usually here this time of day."),
         "exits":{"east":"east hallway", "west":"it department"},
-        "items":["brochure","poster"]
+        "items":["pamphlet","poster"]
     },
     "storage":{
         "name":"storage area",
@@ -71,7 +74,7 @@ item_descriptions = {
     "broken keyboard":"This keyboard is broken. It looks like someone smashed it on their desk in frustration...only the 'H' 'E' 'L' and 'P' keys remain. How strange...",
     "stick of ddr5 ram":"jackpot!",
     "usb drive":"A standard 64GB usb drive. What could be on it...?",
-    "brochure":"This is the Fall 2026 course catalogue. Didn't know these were out yet.",
+    "pamphlet":"This is the Fall 2026 course catalogue. Didn't know these were out yet.",
     "poster":"It's a poster for Student Activities this summer",
     # "":"",
     # "":"",
@@ -80,7 +83,7 @@ item_descriptions = {
 readable_items = {
     "sticky note":"The note reads, \"All assets must be signed out with date and technician name!\"",
     "book":"It seems to be a textbook about learning Windows 11. Truly fascinating.",
-    "brochure":"This can't be right...HCC doesn't offer Ancient Sumerian as a language..."
+    "pamphlet":"This can't be right...HCC doesn't offer Ancient Sumerian as a language..."
 }
 
 item_aliases = {
@@ -119,11 +122,11 @@ def display_room(room_name, force_full=False):
 
     # Only show "entered" message when actually moving to a room (not when using look)
     if not force_full:
-        print(f"You have entered the {room['name'].title()}\n")
+        typewrite(f"You have entered the {room['name'].title()}\n")
 
     # Show description
     if force_full or room_name not in player["visited_rooms"]:
-        print(room["description"])
+        typewrite(room["description"])
         player["visited_rooms"].add(room_name)
     else:
         print("[You've been here before]")
@@ -131,11 +134,11 @@ def display_room(room_name, force_full=False):
     # Always show items and exits
     if room['items']:
         if len(room['items']) == 1:
-            print(f"\nYou see a {room['items'][0]}.")
+            typewrite(f"\nYou see a {room['items'][0]}.")
         else:
             all_but_last = ', a '.join(room['items'][:-1])
-            print(f"\nYou see a {all_but_last} and a {room['items'][-1]}.")
-    print(f"\nExits: {', '.join(room['exits'])}")
+            typewrite(f"\nYou see a {all_but_last} and a {room['items'][-1]}.")
+    typewrite(f"\nExits: {', '.join(room['exits'])}")
 
 def resolve_alias(noun):
     return item_aliases.get(noun, noun)
@@ -152,8 +155,9 @@ def parse(raw):
     return verb, noun
 
 def main():
+    clear_screen()
     # Welcome Loop
-    print("Welcome to the Hagerstown Community College IT Help Desk Adventure! Press Enter to begin, or Q to quit\n")
+    typewrite("Welcome to the Hagerstown Community College IT Help Desk Adventure!\nPress Enter to begin, or Q to quit\n")
     location = "it department"
     selection = input("> ").strip().lower()
     if selection == "q":
@@ -165,7 +169,7 @@ def main():
         try:
             raw = (input("> ")).strip().lower()
         except (EOFError, KeyboardInterrupt):
-            print("\nGoodbye.")
+            typewrite("\nGoodbye.")
             break
 
         if not raw:
@@ -214,16 +218,16 @@ Available commands:
         if verb == "go":
             if noun in rooms[location]['exits']:
                 if (location, noun) in locked_exits:
-                    print("The door is locked. Strange...doors aren't normally locked from the inside...")
+                    typewrite("The door is locked. Strange...doors aren't normally locked from the inside...")
                 else:
                     location = rooms[location]['exits'][noun]
                     display_room(location)
             else:
-                print("You can't go that way")
+                typewrite("You can't go that way")
 
         elif verb == "where":
-            print(f"You are in the {rooms[location]['name'].title()}.")
-            print(f"\nExits: {', '.join(rooms[location]['exits'])}")
+            typewrite(f"You are in the {rooms[location]['name'].title()}.")
+            typewrite(f"\nExits: {', '.join(rooms[location]['exits'])}")
 
         elif verb == "look":
             display_room(location, force_full=True)
@@ -231,57 +235,57 @@ Available commands:
         elif verb == "examine":
             if noun in rooms[location]["items"] or noun in player["inventory"]:
                 if noun in item_descriptions:
-                    print(item_descriptions[noun])
+                    typewrite(item_descriptions[noun])
                 elif noun in readable_items:
-                    print("It says something...")
+                    typewrite("It says something...")
                 else:
-                    print(f"There doesn't seem to be anything special about the {noun}.")
+                    typewrite(f"There doesn't seem to be anything special about the {noun}.")
             else:
-                print(f"You don't see a {noun} here.")
+                typewrite(f"You don't see a {noun} here.")
                 
 
         elif verb == "take":
             if noun in rooms[location]["items"]:
                 rooms[location]["items"].remove(noun)
                 player["inventory"].append(noun)
-                print(f"\nYou pick up the {noun}. It is now in your inventory.")
+                typewrite(f"\nYou pick up the {noun}. It is now in your inventory.")
             else:
-                print(f"\nYou don't see a {noun} here")
+                typewrite(f"\nYou don't see a {noun} here")
         
         elif verb == "drop":
             if noun in player["inventory"]:
                 player["inventory"].remove(noun)
                 rooms[location]["items"].append(noun)
-                print(f"You drop the {noun}.")
+                typewrite(f"You drop the {noun}.")
             else:
-                print("You aren't carrying that.")
+                typewrite("You aren't carrying that.")
         
         elif verb == "read":
             if noun in rooms[location]["items"] or noun in player["inventory"]:
                 if noun in readable_items:
-                    print(readable_items[noun])
+                    typewrite(readable_items[noun])
                 else:
-                    print("There's nothing written on this")
+                    typewrite("There's nothing written on this")
             else:
-                print(f"There's no {noun} here")
+                typewrite(f"There's no {noun} here")
 
         elif verb == "use":
             if noun in player["inventory"] or noun in rooms[location]["items"]:
                 #specific use cases here
                 # if noun == {special}:
                     # some action
-                print("You can't use that right now.")
+                typewrite("You can't use that right now.")
             else:
-                print("You don't have that item. ")
+                typewrite("You don't have that item. ")
 
         elif verb == "inventory" or verb == "i":
             if player["inventory"]:
-                print(f"Inventory: \n{', \n'.join(player['inventory'])}")
+                typewrite(f"Inventory: \n{', \n'.join(player['inventory'])}")
             else:
-                print("You aren't carrying anything.")
+                typewrite("You aren't carrying anything.")
 
         else:
-            print("Command not recognized")
+            typewrite("Command not recognized")
 
 
 

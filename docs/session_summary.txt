@@ -1,20 +1,23 @@
 SESSION SUMMARY
 ===============
-Last updated: 2026-02-27
+Last updated: 2026-02-28
 
 WHERE WE ARE
 ------------
 Working prototype is complete and functional. All core mechanics are in place
-for the IT building tutorial section. Code is in a single file: main.py.
+for the IT building tutorial section. Code split across main.py and helpers.py.
 
 WHAT'S WORKING
 --------------
 - Room navigation: "go <direction>"
 - Room display with items and exits
 - Locked exits: parking lot door locked via locked_exits set
-- Commands: look, examine, take, drop, inventory (i)
+- Commands: look, examine, take, drop, read, inventory (i), use (stub), where, help
 - parse() strips articles (the/a/an) from input
-- player dict tracks inventory and sanity (100)
+- player dict tracks inventory, sanity (100), and visited_rooms (set)
+- Typewriter effect: all narrative output via typewrite() in helpers.py
+- clear_screen() in helpers.py, called on game start
+- "brochure" renamed to "pamphlet"
 
 WHAT'S NEXT (in rough priority order)
 --------------------------------------
@@ -30,11 +33,13 @@ WHAT'S NEXT (in rough priority order)
 DEFERRED / NOTES (see docs/notes.txt for full list)
 ----------------------------------------------------
 - Oxford comma formatting for item lists in display_room
-- Truncated descriptions for already-visited rooms (visited_rooms set)
 - Sanity-gated item description tiers (normal → unsettling → wrong → incomprehensible)
 - Inventory corruption at low sanity (items rename themselves)
 - Item names fragment via zalgo before descriptions go eldritch
 - Save fake arms / phlebotomy room for Library or Theatre building
+- Screen flicker mechanic (ANSI reverse video) — deferred to polish phase
+- parse() move to helpers.py deferred until class refactor
+- Pronoun reference ("take it") via last_item variable
 
 KEY ARCHITECTURE NOTES
 -----------------------
@@ -43,6 +48,8 @@ KEY ARCHITECTURE NOTES
 - item_descriptions: flat dict, keys must match room items list exactly (all lowercase)
 - location tracked as local variable in main(), NOT in player dict
 - parse() returns (verb, noun) — strips articles, lowercases everything
+- helpers.py: typewrite(text, delay=0.03), clear_screen() — no game state dependencies
+- colorama imported but commented out — reserved for sanity/zalgo color effects
 
 MAP (IT Building)
 -----------------

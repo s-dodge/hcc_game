@@ -10,6 +10,7 @@ Thumbs.db
 # Environment
 venv/
 .venv/
+.venv*/
 env/
 
 # Packaging

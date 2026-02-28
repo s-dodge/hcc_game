@@ -69,3 +69,9 @@ EXIT MECHANISM IDEAS
 - Question: should exit feel like escaping/fleeing or "logging out" of a simulation?
 - Sanity-gated exit creates real stakes: "explore more or get out while I still can?"
 
+SCREEN FLICKER
+- Deferred — return to this once core mechanics are solid
+- Best candidate: ANSI reverse video (`\033[?5h` / `\033[?5l`) toggled rapidly in a loop
+- Fallback: color flash with background fill if ANSI mode unsupported on target terminal
+- Lives in helpers.py alongside typewrite()
+
