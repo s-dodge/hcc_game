@@ -55,13 +55,13 @@ MAP (IT Building)
 -----------------
 it department → north: storage, east: printing department, south: south hallway
 printing department → west: it department, east: east hallway
-east hallway → west: printing department, south: cafeteria
-south hallway → north: it department, east: cafeteria, west: parking lot (LOCKED), south: south stairwell
+east hallway → west: printing department, south: atrium
+south hallway → north: it department, east: atrium, west: parking lot (LOCKED), south: south stairwell
 storage → south: it department
-cafeteria → north: east hallway, west: south hallway, south: exit
+atrium → north: east hallway, west: south hallway, south: exit
 parking lot → east: south hallway
 south stairwell → north: south hallway, south: exit
-exit (Main Campus) → north: cafeteria, south: library, east: kepler theater
+exit (Main Campus) → north: atrium, south: library, east: kepler theater
 
 STORY PREMISE
 -------------

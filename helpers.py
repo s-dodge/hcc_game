@@ -3,11 +3,15 @@ import time
 import subprocess
 import os
 
-def typewrite(text, delay=0.03):
+# --- typewriter function for better text presentation ---
+def typewrite(text: str, char_delay: float = 0.03, line_delay: float = 0.4) -> str:
     for char in text:
         sys.stdout.write(char)
         sys.stdout.flush()
-        time.sleep(delay)
+        if char == "\n":  # increase delay for new lines for better flow
+            time.sleep(line_delay)
+        else:
+            time.sleep(char_delay)
     print()
 
 def clear_screen():

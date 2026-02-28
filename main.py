@@ -6,9 +6,16 @@ from helpers import typewrite, clear_screen
 
 # WORLD
 rooms = {
+
+    # "":{
+    #     "name":"help desk office",
+    #     "description":(""),
+    #     "exits":{"east":"it department"},
+    #     "items":["workstation", "filing cabinet", "scribbled note"]
+    # },
     "it department":{
         "name": "IT Department",
-        "description": ("The bright, fluorescent lights here illuminate stacks of old equipment and tangles of Cat6 cable...where did everyone go?\n\nThe lights flicker..."
+        "description": (f"The bright, fluorescent lights here illuminate stacks of old equipment and tangles of Cat6 cable...\n\nThe lights flicker...\n\nWhere is everone?"
         ),
         "exits": {"north": "storage", "east": "printing department", "south":"south hallway"},
         "items": ["stick of ddr5 ram", "book", "workstation", "broken keyboard", "bin of mice"]
@@ -16,19 +23,19 @@ rooms = {
     },
     "south hallway":{
         "name":"south hallway",
-        "description":("The hallway is empty. You see the parking lot to the west, the cafeteria to the east, and a stairwell to the south"),
-        "exits":{"north":"it department","west":"parking lot","east":"cafeteria", "south":"south stairwell"},
+        "description":("The hallway is empty. You see the parking lot to the west, the atrium to the east, and a stairwell to the south"),
+        "exits":{"north":"it department","west":"parking lot","east":"atrium", "south":"south stairwell"},
         "items":[]
     },
     "east hallway":{
         "name":"east hallway",
         "description":("The hallway is empty. Where is everyone...?"),
-        "exits":{"west":"printing department", "south":"cafeteria"},
+        "exits":{"west":"printing department", "south":"atrium"},
         "items":[]
     },
     "printing department":{
         "name":"printing department",
-        "description":("The room is empty. Norm is usually here this time of day."),
+        "description":("The room is empty...Norm is usually here this time of day."),
         "exits":{"east":"east hallway", "west":"it department"},
         "items":["pamphlet","poster"]
     },
@@ -38,8 +45,8 @@ rooms = {
         "exits":{"south":"it department"},
         "items":["usb drive", "sticky note", "keycard"]
     },
-    "cafeteria":{
-        "name":"cafeteria",
+    "atrium":{
+        "name":"atrium",
         "description":(""),
         "exits":{"north":"east hallway","west":"south hallway", "south":"exit"},
         "items":[]
@@ -59,7 +66,7 @@ rooms = {
     "exit":{
         "name":"Main Campus",
         "description":(""),
-        "exits":{"north":"cafeteria","south":"library","east":"kepler theater"},
+        "exits":{"north":"atrium","south":"library","east":"kepler theater"},
         "items":[]
     },
 
@@ -218,7 +225,7 @@ Available commands:
         if verb == "go":
             if noun in rooms[location]['exits']:
                 if (location, noun) in locked_exits:
-                    typewrite("The door is locked. Strange...doors aren't normally locked from the inside...")
+                    typewrite("The door is locked. Strange...these doors aren't normally locked from the inside...")
                 else:
                     location = rooms[location]['exits'][noun]
                     display_room(location)
