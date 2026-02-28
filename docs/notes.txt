@@ -1,6 +1,12 @@
 NOTES / DEFERRED IDEAS
 ======================
 
+DISPLAY LIBRARIES
+- `rich` (pip install rich) - tables, colored text, panels, animated/corrupted text effects - most useful for sanity system
+- `tabulate` (pip install tabulate) - lightweight, just tables
+- Consider tone: tables feel clinical, a simple list may suit horror atmosphere better
+- `rich` is the stronger option if we want text corruption/color effects for sanity
+
 DISPLAY
 - display_room item list: use negative index to format as "a broken keyboard, a workstation, and a bin of mice" (Oxford comma, "and a" before last item)
 - display_room: show truncated/short description for already-visited rooms (track visited rooms in a set, show full description on first visit only)
@@ -10,6 +16,13 @@ DISPLAY
   - OPTION 2 (Simple): Pre-computed dict alongside item_descriptions - item_articles = {"workstation": "a", "error message": "an"}
   - OPTION 3 (Easiest): Just use "a" everywhere and avoid vowel-starting item names in content
   - OPTION 4 (Overkill): Runtime check if item starts with vowel → use "an", else "a" (complex for small game)
+
+PRONOUN REFERENCE ("take it", "read it", etc.)
+- Track last interacted item in a `last_item` variable (initially None)
+- After resolve_alias, check: if noun == "it" and last_item: noun = last_item
+- Update last_item on successful examine and read interactions
+- Do NOT update on take (item is in inventory, reference would be stale)
+- Edge case: last_item should reset or warn if item is no longer in room/inventory
 
 PARSER / ITEM ALIASES
 - Add item aliases so multi-word items can be referenced by shorter names

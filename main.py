@@ -1,5 +1,5 @@
 # HCC Text-Based Adventure game by Soren M. Dodge | 2026
-import os
+
 
 # WORLD
 rooms = {
@@ -13,27 +13,27 @@ rooms = {
     },
     "south hallway":{
         "name":"south hallway",
-        "description":(""),
+        "description":("The hallway is empty. You see the parking lot to the west, the cafeteria to the east, and a stairwell to the south"),
         "exits":{"north":"it department","west":"parking lot","east":"cafeteria", "south":"south stairwell"},
         "items":[]
     },
     "east hallway":{
         "name":"east hallway",
-        "description":(""),
+        "description":("The hallway is empty. Where is everyone...?"),
         "exits":{"west":"printing department", "south":"cafeteria"},
         "items":[]
     },
     "printing department":{
         "name":"printing department",
-        "description":(""),
+        "description":("The room is empty. Norm is usually here this time of day."),
         "exits":{"east":"east hallway", "west":"it department"},
-        "items":[]
+        "items":["brochure","poster"]
     },
     "storage":{
         "name":"storage area",
         "description":("The walls are lined with shelves of assets...power cables, monitors, laptop bags, network switches, and unnameable layer 3 devices."),
         "exits":{"south":"it department"},
-        "items":["usb drive", "sticky note"]
+        "items":["usb drive", "sticky note", "keycard"]
     },
     "cafeteria":{
         "name":"cafeteria",
@@ -65,23 +65,33 @@ rooms = {
 # ITEMS
 item_descriptions = {
     "book":"It's an untouched copy of 'Windows 11: Inside Out'.",
-    "keycard":"The IT intern's keycard.",
+    "keycard":"It's the IT intern's keycard.",
     "bin of mice":"A bin of real living mice...no that can't be right. Of course, it's just computer mice.",
     "workstation":"This workstation seems to be broken...maybe the intern was working on it...",
     "broken keyboard":"This keyboard is broken. It looks like someone smashed it on their desk in frustration...only the 'H' 'E' 'L' and 'P' keys remain. How strange...",
-    "stick of ddr5 ram":"jackpot.",
+    "stick of ddr5 ram":"jackpot!",
     "usb drive":"A standard 64GB usb drive. What could be on it...?",
-    # "":"",
-    # "":"",
+    "brochure":"This is the Fall 2026 course catalogue. Didn't know these were out yet.",
+    "poster":"It's a poster for Student Activities this summer",
     # "":"",
     # "":"",
 }
 
 readable_items = {
-    "sticky note":"The note reads, 'All assets must be signed out with date and technician name'",
-    # "email":"",
+    "sticky note":"The note reads, \"All assets must be signed out with date and technician name!\"",
+    "book":"It seems to be a textbook about learning Windows 11. Truly fascinating.",
+    "brochure":"This can't be right...HCC doesn't offer Ancient Sumerian as a language..."
 }
 
+item_aliases = {
+    "ram":"stick of ddr5 ram",
+    "ddr5":"stick of ddr5 ram",
+    "ddr5 ram":"stick of ddr5 ram",
+    "keyboard":"broken keyboard",
+    "mice":"bin of mice",
+    "drive":"usb drive",
+    "note":"sticky note",
+}
 # PLAYER STATE
 player = {
     "inventory":[],
@@ -127,6 +137,9 @@ def display_room(room_name, force_full=False):
             print(f"\nYou see a {all_but_last} and a {room['items'][-1]}.")
     print(f"\nExits: {', '.join(room['exits'])}")
 
+def resolve_alias(noun):
+    return item_aliases.get(noun, noun)
+
 def parse(raw):
     """Return (verb, noun) from raw input string"""
     parts=raw.lower().strip().split(None, 1)
@@ -163,9 +176,10 @@ def main():
         raw = raw.replace("look at ", "examine ", 1)
 
         verb, noun = parse(raw)
+        noun = resolve_alias(noun)
 
         # Check quit first
-        if verb == "q" or verb == "quit":
+        if verb == "q" or verb == "quit" or verb == "exit":
             break
 
         # Check help
@@ -194,13 +208,13 @@ Available commands:
         elif verb == "x": verb = "examine"
         elif verb == "l": verb = "look"
         elif verb == "get": verb = "take"
-        # elif verb == "pick up": verb = "take"
+        elif verb == "walk": verb = "go"
 
         # Handle commands (separate chain starts here)
         if verb == "go":
             if noun in rooms[location]['exits']:
                 if (location, noun) in locked_exits:
-                    print("The door is locked.")
+                    print("The door is locked. Strange...doors aren't normally locked from the inside...")
                 else:
                     location = rooms[location]['exits'][noun]
                     display_room(location)
@@ -230,8 +244,7 @@ Available commands:
             if noun in rooms[location]["items"]:
                 rooms[location]["items"].remove(noun)
                 player["inventory"].append(noun)
-                print(f"\nYou pick up the {noun}. ")
-                print(f"\nThe {noun} is now in your inventory. ")
+                print(f"\nYou pick up the {noun}. It is now in your inventory.")
             else:
                 print(f"\nYou don't see a {noun} here")
         
