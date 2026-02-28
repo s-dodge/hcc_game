@@ -17,6 +17,16 @@ PARSER / ITEM ALIASES
 - Implement as dict mapping aliases to canonical item names: {"ram": "stick of ddr5 ram", "ddr5": "stick of ddr5 ram", ...}
 - Parser should check aliases first, then fall back to exact match
 - Other examples: "bin of mice" → ["mice", "bin"], "broken keyboard" → ["keyboard"]
+- Related: display_names dict maps canonical key → formatted display string (e.g. "usb drive" → "usb drive")
+- These solve opposite problems but live together in items.py: aliases handle input, display_names handle output
+- Pipeline: player input → aliases → canonical key → display_names → shown to player
+
+ROOM DESCRIPTION SANITY TIERS
+- Room descriptions should change as sanity decreases, similar to item description tiers
+- Example: moss begins growing on walls at mid-low sanity, spreading/worsening as sanity drops further
+- Could use same threshold dict pattern as items: {75: "alt description", 50: "worse description", 25: "worst description"}
+- Moss/organic growth is a good universal motif - starts subtle, becomes overwhelming
+- Implementation: display_room checks sanity threshold and selects appropriate description variant
 
 SANITY EFFECTS
 - Item descriptions change as sanity drops (examine checks sanity threshold, returns alternate description)
@@ -27,6 +37,11 @@ SANITY EFFECTS
 - Item names in room display and inventory fragment via zalgo/unicode before descriptions go full eldritch
 - Non-euclidian topology, eldrich runes, blood coverage as description tiers
 - Consider a dict of sanity-gated alternate descriptions per item keyed by threshold, e.g. {75: "unsettling text", 50: "wrong text", 25: "incomprehensible text"}
+- "book" (Windows 11: Inside Out) sanity tiers:
+  - 100-76: "It's an untouched copy of 'Windows 11: Inside Out'." (normal)
+  - 75-51: "The cover reads 'Windows 11: Inside Out'...but the pages seem to be written in Latin." (unsettling)
+  - 50-26: "The title has changed. It now reads 'The Necronomicon: Inside Out'. The pages are warm to the touch." (wrong)
+  - 25-0: Inventory name changes from "book" → "grimoire". "The grimoire writhes in your hands. The text is written in a language that predates human civilization. You understand every word." (incomprehensible)
 
 HELPDESK TOOL INTEGRATION (easter egg trigger)
 - Option "666" in main menu - most on-theme for horror

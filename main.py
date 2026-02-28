@@ -5,10 +5,10 @@ import os
 rooms = {
     "it department":{
         "name": "IT Department",
-        "description": ("The bright, fluorescent lights here illuminate a tangle of old equipment...where did everyone go?"
+        "description": ("The bright, fluorescent lights here illuminate stacks of old equipment and tangles of Cat6 cable...where did everyone go?\n\nThe lights flicker..."
         ),
         "exits": {"north": "storage", "east": "printing department", "south":"south hallway"},
-        "items": ["stick of ddr5 ram", "workstation", "broken keyboard", "bin of mice"]
+        "items": ["stick of ddr5 ram", "book", "workstation", "broken keyboard", "bin of mice"]
 
     },
     "south hallway":{
@@ -31,9 +31,9 @@ rooms = {
     },
     "storage":{
         "name":"storage area",
-        "description":(""),
+        "description":("The walls are lined with shelves of assets...power cables, monitors, laptop bags, network switches, and unnameable layer 3 devices."),
         "exits":{"south":"it department"},
-        "items":[]
+        "items":["usb drive", "sticky note"]
     },
     "cafeteria":{
         "name":"cafeteria",
@@ -64,14 +64,13 @@ rooms = {
 
 # ITEMS
 item_descriptions = {
-    "book":"An untouched copy of 'Windows 11 Inside Out'.",
+    "book":"It's an untouched copy of 'Windows 11: Inside Out'.",
     "keycard":"The IT intern's keycard.",
-    "bin of mice":"A bin of real living mice...no that can't be. Of course, it's just computer mice.",
+    "bin of mice":"A bin of real living mice...no that can't be right. Of course, it's just computer mice.",
     "workstation":"This workstation seems to be broken...maybe the intern was working on it...",
-    "broken keyboard":"This keyboard is broken. It looks like someone smashed it on their desk in frustration.",
+    "broken keyboard":"This keyboard is broken. It looks like someone smashed it on their desk in frustration...only the 'H' 'E' 'L' and 'P' keys remain. How strange...",
     "stick of ddr5 ram":"jackpot.",
-    # "":"",
-    # "":"",
+    "usb drive":"A standard 64GB usb drive. What could be on it...?",
     # "":"",
     # "":"",
     # "":"",
@@ -79,8 +78,8 @@ item_descriptions = {
 }
 
 readable_items = {
-    "note":"",
-    "email":"",
+    "sticky note":"The note reads, 'All assets must be signed out with date and technician name'",
+    # "email":"",
 }
 
 # PLAYER STATE
@@ -110,7 +109,7 @@ def display_room(room_name, force_full=False):
 
     # Only show "entered" message when actually moving to a room (not when using look)
     if not force_full:
-        print(f"You have entered the {room['name'].title()}")
+        print(f"You have entered the {room['name'].title()}\n")
 
     # Show description
     if force_full or room_name not in player["visited_rooms"]:
@@ -121,8 +120,12 @@ def display_room(room_name, force_full=False):
 
     # Always show items and exits
     if room['items']:
-        print(f"You see a {', a '.join(room['items'])}.")
-    print(f"Exits: {', '.join(room['exits'])}")
+        if len(room['items']) == 1:
+            print(f"\nYou see a {room['items'][0]}.")
+        else:
+            all_but_last = ', a '.join(room['items'][:-1])
+            print(f"\nYou see a {all_but_last} and a {room['items'][-1]}.")
+    print(f"\nExits: {', '.join(room['exits'])}")
 
 def parse(raw):
     """Return (verb, noun) from raw input string"""
@@ -155,6 +158,10 @@ def main():
         if not raw:
             continue
 
+        # Normalize multi-word verb phrases before parsing
+        raw = raw.replace("pick up ", "take ", 1)
+        raw = raw.replace("look at ", "examine ", 1)
+
         verb, noun = parse(raw)
 
         # Check quit first
@@ -166,6 +173,7 @@ def main():
             print("""
 Available commands:
   go [direction] - Move in a direction (n/s/e/w also work)
+  where - Show your current location and exits
   look (l) - Look around the current room
   examine [item] (x) - Examine an item closely
   read [item] - Read a document or note
@@ -176,6 +184,7 @@ Available commands:
   help - Show this message
   quit (q) - Exit the game
 """)
+            continue
 
         # Transform verb synonyms (separate chain)
         if verb in ["n", "north"]: verb, noun = "go", "north"
@@ -185,6 +194,7 @@ Available commands:
         elif verb == "x": verb = "examine"
         elif verb == "l": verb = "look"
         elif verb == "get": verb = "take"
+        # elif verb == "pick up": verb = "take"
 
         # Handle commands (separate chain starts here)
         if verb == "go":
@@ -197,6 +207,10 @@ Available commands:
             else:
                 print("You can't go that way")
 
+        elif verb == "where":
+            print(f"You are in the {rooms[location]['name'].title()}.")
+            print(f"\nExits: {', '.join(rooms[location]['exits'])}")
+
         elif verb == "look":
             display_room(location, force_full=True)
 
@@ -204,6 +218,8 @@ Available commands:
             if noun in rooms[location]["items"] or noun in player["inventory"]:
                 if noun in item_descriptions:
                     print(item_descriptions[noun])
+                elif noun in readable_items:
+                    print("It says something...")
                 else:
                     print(f"There doesn't seem to be anything special about the {noun}.")
             else:
