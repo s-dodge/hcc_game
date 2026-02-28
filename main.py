@@ -70,12 +70,12 @@ item_descriptions = {
     "workstation":"This workstation seems to be broken...maybe the intern was working on it...",
     "broken keyboard":"This keyboard is broken. It looks like someone smashed it on their desk in frustration.",
     "stick of ddr5 ram":"jackpot.",
-    "":"",
-    "":"",
-    "":"",
-    "":"",
-    "":"",
-    "":"",
+    # "":"",
+    # "":"",
+    # "":"",
+    # "":"",
+    # "":"",
+    # "":"",
 }
 
 readable_items = {
@@ -104,16 +104,22 @@ locked_exits = {
 # """)
 
 
-def display_room(room_name):
+def display_room(room_name, force_full=False):
+    """display room description. force-full=True always shows full description"""
     room = rooms[room_name]
-    print(f"You have entered the {room['name'].title()}")
 
-    if room_name not in player["visited_rooms"]:
+    # Only show "entered" message when actually moving to a room (not when using look)
+    if not force_full:
+        print(f"You have entered the {room['name'].title()}")
+
+    # Show description
+    if force_full or room_name not in player["visited_rooms"]:
         print(room["description"])
         player["visited_rooms"].add(room_name)
     else:
         print("[You've been here before]")
 
+    # Always show items and exits
     if room['items']:
         print(f"You see a {', a '.join(room['items'])}.")
     print(f"Exits: {', '.join(room['exits'])}")
@@ -150,9 +156,12 @@ def main():
             continue
 
         verb, noun = parse(raw)
+
+        # Check quit first
         if verb == "q" or verb == "quit":
             break
 
+        # Check help
         elif verb == "help" or verb == "h":
             print("""
 Available commands:
@@ -168,7 +177,17 @@ Available commands:
   quit (q) - Exit the game
 """)
 
-        elif verb == "go":
+        # Transform verb synonyms (separate chain)
+        if verb in ["n", "north"]: verb, noun = "go", "north"
+        elif verb in ["s", "south"]: verb, noun = "go", "south"
+        elif verb in ["e", "east"]: verb, noun = "go", "east"
+        elif verb in ["w", "west"]: verb, noun = "go", "west"
+        elif verb == "x": verb = "examine"
+        elif verb == "l": verb = "look"
+        elif verb == "get": verb = "take"
+
+        # Handle commands (separate chain starts here)
+        if verb == "go":
             if noun in rooms[location]['exits']:
                 if (location, noun) in locked_exits:
                     print("The door is locked.")
@@ -179,7 +198,7 @@ Available commands:
                 print("You can't go that way")
 
         elif verb == "look":
-            display_room(location)
+            display_room(location, force_full=True)
 
         elif verb == "examine":
             if noun in rooms[location]["items"] or noun in player["inventory"]:
@@ -211,14 +230,14 @@ Available commands:
         elif verb == "read":
             if noun in rooms[location]["items"] or noun in player["inventory"]:
                 if noun in readable_items:
-                    print(readable_items(noun))
+                    print(readable_items[noun])
                 else:
                     print("There's nothing written on this")
             else:
                 print(f"There's no {noun} here")
 
         elif verb == "use":
-            if noun in player["inventory"] or noun in rooms [location]["items"]:
+            if noun in player["inventory"] or noun in rooms[location]["items"]:
                 #specific use cases here
                 # if noun == {special}:
                     # some action
