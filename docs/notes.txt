@@ -4,6 +4,19 @@ NOTES / DEFERRED IDEAS
 DISPLAY
 - display_room item list: use negative index to format as "a broken keyboard, a workstation, and a bin of mice" (Oxford comma, "and a" before last item)
 - display_room: show truncated/short description for already-visited rooms (track visited rooms in a set, show full description on first visit only)
+- Navigation/wayfinding: Consider more descriptive exit names with directional context (e.g., "north: parking lot", "south: cafeteria") OR use obvious room names like "parking lot", THEN reveal descriptive names after room has been visited (e.g., "Exits: north, east, south" becomes "Exits: north (storage), east (printing), south (hallway)" after visiting those rooms)
+- Indefinite article handling: Need "a" vs "an" logic for items (e.g., "a keyboard" vs "an error message")
+  - OPTION 1 (Simplest): Skip articles entirely - "You can see: workstation, keyboard, bin of mice" (common in classic IF)
+  - OPTION 2 (Simple): Pre-computed dict alongside item_descriptions - item_articles = {"workstation": "a", "error message": "an"}
+  - OPTION 3 (Easiest): Just use "a" everywhere and avoid vowel-starting item names in content
+  - OPTION 4 (Overkill): Runtime check if item starts with vowel → use "an", else "a" (complex for small game)
+
+PARSER / ITEM ALIASES
+- Add item aliases so multi-word items can be referenced by shorter names
+- Example: "stick of ddr5 ram" should work with: "ram", "ddr5", "ddr5 ram", "stick"
+- Implement as dict mapping aliases to canonical item names: {"ram": "stick of ddr5 ram", "ddr5": "stick of ddr5 ram", ...}
+- Parser should check aliases first, then fall back to exact match
+- Other examples: "bin of mice" → ["mice", "bin"], "broken keyboard" → ["keyboard"]
 
 SANITY EFFECTS
 - Item descriptions change as sanity drops (examine checks sanity threshold, returns alternate description)
@@ -14,4 +27,17 @@ SANITY EFFECTS
 - Item names in room display and inventory fragment via zalgo/unicode before descriptions go full eldritch
 - Non-euclidian topology, eldrich runes, blood coverage as description tiers
 - Consider a dict of sanity-gated alternate descriptions per item keyed by threshold, e.g. {75: "unsettling text", 50: "wrong text", 25: "incomprehensible text"}
+
+HELPDESK TOOL INTEGRATION (easter egg trigger)
+- Option "666" in main menu - most on-theme for horror
+- Hitting Enter on empty input - elegant/mysterious, could show fake error: "ERROR: Invalid input. Redirecting..."
+- Buried in department lookup (IT Dept → Helpdesk → specific person → ??? phone extension) - funniest but hardest to discover
+- Hybrid: multiple entry points (666 + hidden department lookup path)
+
+EXIT MECHANISM IDEAS
+- Workstation in IT Department: examine at high sanity returns to helpdesk menu, at low sanity description corrupts and can't escape
+- Warning threshold at ~50 sanity: "The workstation screen flickers unnervingly, but you could probably still use it..."
+- Alternative exit objects: phone (call helpdesk), parking lot (leave building), special command like "logout" or "wake up"
+- Question: should exit feel like escaping/fleeing or "logging out" of a simulation?
+- Sanity-gated exit creates real stakes: "explore more or get out while I still can?"
 

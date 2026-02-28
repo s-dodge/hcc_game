@@ -70,12 +70,24 @@ item_descriptions = {
     "workstation":"This workstation seems to be broken...maybe the intern was working on it...",
     "broken keyboard":"This keyboard is broken. It looks like someone smashed it on their desk in frustration.",
     "stick of ddr5 ram":"jackpot.",
+    "":"",
+    "":"",
+    "":"",
+    "":"",
+    "":"",
+    "":"",
+}
+
+readable_items = {
+    "note":"",
+    "email":"",
 }
 
 # PLAYER STATE
 player = {
     "inventory":[],
-    "sanity": 100
+    "sanity": 100,
+    "visited_rooms":set()
 }
 
 # AREA ACCESS
@@ -94,8 +106,14 @@ locked_exits = {
 
 def display_room(room_name):
     room = rooms[room_name]
-    print(f"You are in the {room['name'].title()}")
-    print(room["description"])
+    print(f"You have entered the {room['name'].title()}")
+
+    if room_name not in player["visited_rooms"]:
+        print(room["description"])
+        player["visited_rooms"].add(room_name)
+    else:
+        print("[You've been here before]")
+
     if room['items']:
         print(f"You see a {', a '.join(room['items'])}.")
     print(f"Exits: {', '.join(room['exits'])}")
@@ -135,6 +153,21 @@ def main():
         if verb == "q" or verb == "quit":
             break
 
+        elif verb == "help" or verb == "h":
+            print("""
+Available commands:
+  go [direction] - Move in a direction (n/s/e/w also work)
+  look (l) - Look around the current room
+  examine [item] (x) - Examine an item closely
+  read [item] - Read a document or note
+  take [item] (get) - Pick up an item
+  drop [item] - Drop an item from inventory
+  inventory (i) - Check what you're carrying
+  use [item] - Use an item
+  help - Show this message
+  quit (q) - Exit the game
+""")
+
         elif verb == "go":
             if noun in rooms[location]['exits']:
                 if (location, noun) in locked_exits:
@@ -149,10 +182,14 @@ def main():
             display_room(location)
 
         elif verb == "examine":
-            if noun in item_descriptions:
-                print(item_descriptions[noun])
+            if noun in rooms[location]["items"] or noun in player["inventory"]:
+                if noun in item_descriptions:
+                    print(item_descriptions[noun])
+                else:
+                    print(f"There doesn't seem to be anything special about the {noun}.")
             else:
-                print("You don't see that here.")
+                print(f"You don't see a {noun} here.")
+                
 
         elif verb == "take":
             if noun in rooms[location]["items"]:
@@ -161,7 +198,7 @@ def main():
                 print(f"\nYou pick up the {noun}. ")
                 print(f"\nThe {noun} is now in your inventory. ")
             else:
-                print("\nYou don't see that here")
+                print(f"\nYou don't see a {noun} here")
         
         elif verb == "drop":
             if noun in player["inventory"]:
@@ -170,6 +207,24 @@ def main():
                 print(f"You drop the {noun}.")
             else:
                 print("You aren't carrying that.")
+        
+        elif verb == "read":
+            if noun in rooms[location]["items"] or noun in player["inventory"]:
+                if noun in readable_items:
+                    print(readable_items(noun))
+                else:
+                    print("There's nothing written on this")
+            else:
+                print(f"There's no {noun} here")
+
+        elif verb == "use":
+            if noun in player["inventory"] or noun in rooms [location]["items"]:
+                #specific use cases here
+                # if noun == {special}:
+                    # some action
+                print("You can't use that right now.")
+            else:
+                print("You don't have that item. ")
 
         elif verb == "inventory" or verb == "i":
             if player["inventory"]:
