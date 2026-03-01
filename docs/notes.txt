@@ -46,7 +46,9 @@ SANITY EFFECTS
 - Multiple tiers: normal → unsettling → wrong → incomprehensible
 - Example: "bin of mice" examine text changes from "computer mice" to real mice at low sanity
 - Items may disappear from or change in inventory as sanity drops
-- Inventory corruption: items rename themselves at low sanity ("keycard" → "a tooth")
+- Items may appear in rooms that were not previously there ("You see X...was that here before?")
+- Rooms may appear in different places ("You have entered the AV Tech department...That's not right, AV Tech isn't in this building")
+- Inventory corruption: items rename themselves at low sanity ("keycard" → "a tooth", "ddr5" → "a finger bone")
 - Item names in room display and inventory fragment via zalgo/unicode before descriptions go full eldritch
 - Non-euclidian topology, eldrich runes, blood coverage as description tiers
 - Consider a dict of sanity-gated alternate descriptions per item keyed by threshold, e.g. {75: "unsettling text", 50: "wrong text", 25: "incomprehensible text"}
