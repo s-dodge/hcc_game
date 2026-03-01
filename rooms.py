@@ -1,4 +1,4 @@
-from items import book, keycard, bin_of_mice, workstation, broken_keyboard, ddr5_ram, usb_drive, pamphlet, poster, sticky_note
+from items import *
 
 class Room:
 
@@ -28,10 +28,17 @@ class Room:
 
 # --- Room instances ---
 
+help_desk_office = Room(
+    name="help desk office",
+    description="",
+    exits={"east": "it department"},
+    items=[helpdesk_workstation, filing_cabinet]
+)
+
 it_department = Room(
     name="it department",
-    description="The bright, fluorescent lights here illuminate stacks of old equipment and tangles of Cat6 cable...\n\nThe lights flicker...\n\nWhere is everyone?",
-    exits={"north": "storage", "east": "printing department", "south": "south hallway"},
+    description="The bright, fluorescent lights here illuminate stacks of old equipment and tangles of Cat6 cable...\n\nThe lights flicker...\n\nWhere is everyone...?",
+    exits={"west": "help desk office", "north": "storage room", "east": "printing department", "south": "south hallway"},
     items=[ddr5_ram, book, workstation, broken_keyboard, bin_of_mice]
 )
 
@@ -54,8 +61,8 @@ printing_department = Room(
     items=[pamphlet, poster]
 )
 
-storage = Room(
-    name="storage",
+storage_room = Room(
+    name="storage room",
     description="The walls are lined with shelves of assets...power cables, monitors, laptop bags, network switches, and unnameable layer 3 devices.",
     exits={"south": "it department"},
     items=[usb_drive, sticky_note, keycard]
@@ -100,11 +107,12 @@ kepler_theatre = Room(
 # --- World data ---
 
 all_rooms = {
+    "help desk office": help_desk_office,
     "it department": it_department,
     "south hallway": south_hallway,
     "east hallway": east_hallway,
     "printing department": printing_department,
-    "storage": storage,
+    "storage room": storage_room,
     "atrium": atrium,
     "parking lot": parking_lot,
     "south stairwell": south_stairwell,

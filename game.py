@@ -49,7 +49,16 @@ class Game:
         if selection == "q":
             return
 
-        self.display_room(self.player.location)
+        clear_screen()
+        typewrite("The morning is gray and cold, and rain patters lightly on the roof of the building and runs in slow rivulets down the window of your office.\n\n")
+        input("")
+        typewrite("A notification appears in the corner of your monitor. A ServiceDesk ticket has been assigned to you.\n\n")
+        input("")
+        typewrite("The subject reads: \"Urgent - Password reset needed IN PERSON at the LRC. Can't get my work done. Send someone now if possible\"\n\n")
+        input("")
+        clear_screen()
+
+        self.display_room(self.player.location, force_full=True)
 
         while True:
             try:
@@ -145,7 +154,8 @@ Available commands:
                 self.player.inventory.append(item)
                 typewrite(f"\nYou pick up the {item.name}. It is now in your inventory.")
             else:
-                typewrite(f"You can't take the {item.name}.")
+                reason = f", it's {item.untakeable_reason}" if item.untakeable_reason else ""
+                typewrite(f"You can't take the {item.name}{reason}.")
         else:
             typewrite(f"\nYou don't see a {noun} here.")
 

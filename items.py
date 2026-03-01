@@ -1,10 +1,11 @@
 class Item:
-    def __init__(self, name, description, aliases=None, read_text=None, takeable=True, usable=False, state=None, sanity_descriptions=None):
+    def __init__(self, name, description, aliases=None, read_text=None, takeable=True, untakeable_reason=None, usable=False, state=None, sanity_descriptions=None):
         self.name = name
         self.description = description
         self.aliases = aliases if aliases is not None else []
         self.read_text = read_text
         self.takeable = takeable
+        self.untakeable_reason = untakeable_reason
         self.usable = usable
         self.state = state
         self.sanity_descriptions = sanity_descriptions if sanity_descriptions is not None else {}
@@ -25,15 +26,28 @@ class Item:
 
 # --- Item instances ---
 
+# HELP DESK OFFICE
+
+helpdesk_workstation = Item(
+    name="help desk workstation",
+    description="",
+    takeable=False,
+    untakeable_reason="too heavy",
+    usable=True
+)
+
+filing_cabinet = Item(
+    name="filing cabinet",
+    description = "",
+    takeable=False,
+    untakeable_reason="too heavy",
+)
+
+# IT DEPARTMENT
 book = Item(
     name="book",
     description="It's an untouched copy of 'Windows 11: Inside Out'.",
     read_text="It seems to be a textbook about learning Windows 11. Truly fascinating."
-)
-
-keycard = Item(
-    name="keycard",
-    description="It's the IT intern's keycard."
 )
 
 bin_of_mice = Item(
@@ -46,6 +60,7 @@ workstation = Item(
     name="workstation",
     description="This workstation seems to be broken...maybe the intern was working on it...",
     takeable=False,
+    untakeable_reason="too heavy",
     usable=True
 )
 
@@ -61,12 +76,30 @@ ddr5_ram = Item(
     aliases=["ram", "ddr5", "ddr5 ram"]
 )
 
+# STORAGE ROOM
+
+keycard = Item(
+    name="keycard",
+    description="It's the IT intern's keycard."
+)
+
 usb_drive = Item(
     name="usb drive",
     description="A standard 64GB usb drive. What could be on it...?",
     aliases=["drive"],
     usable=True
 )
+
+sticky_note = Item(
+    name="sticky note",
+    description="A yellow sticky note. There's writing on it.",
+    aliases=["note"],
+    read_text='The note reads, "All assets must be signed out with date and technician name"'
+)
+
+
+
+# PRINTING DEPARTMENT
 
 pamphlet = Item(
     name="pamphlet",
@@ -79,9 +112,30 @@ poster = Item(
     description="It's a poster for Student Activities this summer."
 )
 
-sticky_note = Item(
-    name="sticky note",
-    description="A yellow sticky note. There's writing on it.",
-    aliases=["note"],
-    read_text='The note reads, "All assets must be signed out with date and technician name!"'
-)
+# ATRIUM
+
+# EAST HALLWAY
+
+# SOUTH HALLWAY
+
+# LIBRARY
+
+# KEPLER THEATRE
+
+
+all_items = {
+    "help desk workstation": helpdesk_workstation,
+    "filing cabinet": filing_cabinet,
+    "book": book,
+    "bin of mice": bin_of_mice,
+    "workstation": workstation,
+    "broken keyboard": broken_keyboard,
+    "stick of ddr5 ram": ddr5_ram,
+    "keycard": keycard,
+    "usb drive": usb_drive,
+    "sticky note": sticky_note,
+    "pamphlet": pamphlet,
+    "poster": poster,
+}
+
+

@@ -4,6 +4,6 @@ from player import Player
 from rooms import all_rooms, locked_exits
 
 if __name__ == "__main__":
-    player = Player(location=all_rooms["it department"])
+    player = Player(location=all_rooms["help desk office"])
     game = Game(player=player, rooms=all_rooms, locked_exits=locked_exits)
     game.run()
