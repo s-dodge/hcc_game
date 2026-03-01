@@ -30,7 +30,7 @@ class Room:
 
 help_desk_office = Room(
     name="help desk office",
-    description="",
+    description="Your office - a small room in the main IT department. It's cold in here today, and quiet.",
     exits={"east": "it department"},
     items=[helpdesk_workstation, filing_cabinet]
 )
@@ -65,12 +65,12 @@ storage_room = Room(
     name="storage room",
     description="The walls are lined with shelves of assets...power cables, monitors, laptop bags, network switches, and unnameable layer 3 devices.",
     exits={"south": "it department"},
-    items=[usb_drive, sticky_note, keycard]
+    items=[power_cable, usb_drive, sticky_note, keycard]
 )
 
 atrium = Room(
     name="atrium",
-    description="",
+    description="The lights in this large open area are flickering too...normally the natural light from the windows at the top of the room make this space inviting.\nYou realize that there are no lights...it's the sky that's flickering. No that can't be right. It must have been a cloud passing the sun.",
     exits={"north": "east hallway", "west": "south hallway", "south": "exit"}
 )
 
@@ -122,5 +122,8 @@ all_rooms = {
 }
 
 locked_exits = {
-    ("south hallway", "west")
+    ("south hallway", "west"),
+    ("south stairwell", "south"),
+    ("atrium", "south")
+    
 }

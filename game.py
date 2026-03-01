@@ -1,4 +1,5 @@
 from helpers import typewrite, clear_screen
+import time
 
 class Game:
 
@@ -19,6 +20,16 @@ class Game:
                 break
         return verb, noun
     
+    def exit_labels(self, room):
+        labels = []
+        for direction, target_key in room.exits.items():
+            target = self.rooms.get(target_key)
+            if target and target.visited:
+                labels.append(f"{direction} ({target.name})")
+            else:
+                labels.append(direction)
+        return ', '.join(labels)
+
     def display_room(self, room, force_full=False):
         """display room description. force-full=True always shows full description"""
 
@@ -40,7 +51,7 @@ class Game:
             else:
                 all_but_last = ', a '.join(item.name for item in room.items[:-1])
                 typewrite(f"\nYou see a {all_but_last} and a {room.items[-1].name}.")
-        typewrite(f"\nExits: {', '.join(room.exits)}")
+        typewrite(f"\nExits: {self.exit_labels(room)}")
 
     def run(self):
         clear_screen()
@@ -50,15 +61,31 @@ class Game:
             return
 
         clear_screen()
+        # --- Intro beats ---
         typewrite("The morning is gray and cold, and rain patters lightly on the roof of the building and runs in slow rivulets down the window of your office.\n\n")
-        input("")
         typewrite("A notification appears in the corner of your monitor. A ServiceDesk ticket has been assigned to you.\n\n")
-        input("")
         typewrite("The subject reads: \"Urgent - Password reset needed IN PERSON at the LRC. Can't get my work done. Send someone now if possible\"\n\n")
-        input("")
+        typewrite("Better take a look...\n")
+        time.sleep(2)
         clear_screen()
 
-        self.display_room(self.player.location, force_full=True)
+        # --- Cinematic room intro (first visit only) ---
+        typewrite("You are in your office at HCC. You hear the hum of the heating system running behind the walls, and the boredom of the mid-semester is dragging the inexorable march of time down to a crawl \n")  
+        typewrite("At least this ticket has come up so you can take a walk.\n")  # add as many typewrite() lines as you need
+        typewrite("\n")  # delete unused lines when done
+
+        # Mark as visited so returning here later shows the brief revisit version
+        self.player.location.visited = True
+
+        # Show items and exits to hand off to gameplay
+        room = self.player.location
+        if room.items:
+            if len(room.items) == 1:
+                typewrite(f"\nYou see a {room.items[0].name}.")
+            else:
+                all_but_last = ', a '.join(item.name for item in room.items[:-1])
+                typewrite(f"\nYou see a {all_but_last} and a {room.items[-1].name}.")
+        typewrite(f"\nExits: {self.exit_labels(room)}")
 
         while True:
             try:
@@ -90,7 +117,9 @@ Available commands:
   take (get)     - Pick up an item
   drop           - Drop an item from inventory
   inventory (i)  - Check what you're carrying
-  use            - Use an item
+  use [item]            - Use an item
+  use [item] on [item]  - Use an item on something
+  leave          - Leave the current room
   help           - Show this message
   quit (q)       - Exit the game
 """)
@@ -116,6 +145,7 @@ Available commands:
             elif verb == "read":                self.handle_read(noun)
             elif verb == "use":                 self.handle_use(noun)
             elif verb in ("inventory", "i"):    self.handle_inventory()
+            elif verb == "leave":               self.handle_leave()
             else:                               typewrite("Command not recognized.")
 
     def handle_go(self, noun):
@@ -135,7 +165,7 @@ Available commands:
     def handle_where(self):
         room = self.player.location
         typewrite(f"You are in the {room.name.title()}.")
-        typewrite(f"\nExits: {', '.join(room.exits)}")
+        typewrite(f"\nExits: {self.exit_labels(room)}")
 
     def handle_examine(self, noun):
         room = self.player.location
@@ -180,11 +210,53 @@ Available commands:
             typewrite(f"There's no {noun} here.")
 
     def handle_use(self, noun):
-        item = self.player.has_item(noun) or self.player.location.get_item(noun)
-        if item:
-            typewrite("You can't use that right now.")
+        # Split "item on target"
+        if " on " in noun:
+            item_name, target_name = noun.split(" on ", 1)
+            for article in ("the ", "a ", "an "):
+                if target_name.startswith(article):
+                    target_name = target_name[len(article):]
+                    break
         else:
-            typewrite("You don't have that item.")
+            item_name, target_name = noun, None
+
+        item = self.player.has_item(item_name) or self.player.location.get_item(item_name)
+        if not item:
+            typewrite("You don't have that.")
+            return
+
+        target = self.player.location.get_item(target_name) if target_name else None
+        if target_name and not target:
+            typewrite(f"You don't see a {target_name} here.")
+            return
+
+        # --- Specific use cases ---
+
+        if item.name == "power cable" and target and target.name == "workstation":
+            if target.state == "powered":
+                typewrite("It's already plugged in.")
+            else:
+                target.state = "powered"
+                target.description = "The workstation hums quietly. The screen glows."  # update examine text
+                self.player.inventory.remove(item)
+                typewrite("You plug in the power cable. The workstation flickers on.")
+
+        elif item.name == "usb drive" and target and target.name == "workstation":
+            if target.state != "powered":
+                typewrite("The workstation isn't on.")
+            elif item.state == "used":
+                typewrite("You've already read what's on this drive.")
+            else:
+                item.state = "used"
+                typewrite("You insert the drive...\n\n")
+                typewrite("""
+some_file.txt
+some_other_file.txt
+""")  # replace with writing
+                self.player.adjust_sanity(-20)
+
+        else:
+            typewrite("You can't use that here.")
 
     def handle_inventory(self):
         if self.player.inventory:
@@ -192,3 +264,10 @@ Available commands:
             typewrite(f"Inventory:\n{items_str}")
         else:
             typewrite("You aren't carrying anything.")
+
+    def handle_leave(self):
+        exits = self.player.location.exits
+        if len(exits) == 1:
+            self.handle_go(list(exits.keys())[0])
+        else:
+            typewrite(f"Which way? ({', '.join(exits)})")

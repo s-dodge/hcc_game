@@ -1,78 +1,88 @@
 SESSION SUMMARY
 ===============
-Last updated: 2026-02-28 (session 2)
+Last updated: 2026-02-28 (session 3)
 
 WHERE WE ARE
 ------------
-Working prototype is complete and functional. All core mechanics are in place
-for the IT building tutorial section. Code split across main.py and helpers.py.
+Class refactor is complete. Game is playable end-to-end through the IT building.
+All core mechanics are implemented: navigation, examine, take, drop, read, use, inventory.
+`use [item] on [target]` is working with the power cable + workstation puzzle chain.
 
 WHAT'S WORKING
 --------------
-- Room navigation: "go <direction>"
-- Room display with items and exits
-- Locked exits: parking lot door locked via locked_exits set
-- Commands: look, examine, take, drop, read, inventory (i), use (stub), where, help
-- parse() strips articles (the/a/an) from input
-- player dict tracks inventory, sanity (100), and visited_rooms (set)
-- Typewriter effect: all narrative output via typewrite() in helpers.py
-  - Signature updated: typewrite(text, char_delay=0.03, line_delay=0.4)
-  - line_delay adds pause after newlines for better pacing
-- clear_screen() in helpers.py, called on game start
-- "brochure" renamed to "pamphlet"
-- "cafeteria" renamed to "atrium" throughout (rooms, exits, docs)
+- Full class refactor: Item, Room, Player, Game across items.py, rooms.py, main.py, game.py
+- Room navigation: go/n/s/e/w, leave (auto-goes if one exit, prompts if multiple)
+- Room display: full description on first visit, brief "[You've been here before]" on return
+- Named exits: shows "(room name)" after direction once that room has been visited
+- Locked exits: set of (room.name, direction) tuples — unlock with .discard()
+- Commands: look (l), examine (x), take/get, drop, read, use, inventory (i), where, help, leave, quit
+- parse() strips articles from noun; handle_use also strips articles from target after "on" split
+- player.sanity (int 0-100), player.inventory (list of Items), player.location (Room)
+- Item.untakeable_reason: appended to "You can't take the X" message
+- Item.state: used for workstation (powered) and usb_drive (used) state tracking
+- use [item] on [target] mechanic:
+  - power cable on workstation → workstation.state = "powered", description updates, cable consumed
+  - usb drive on powered workstation → shows placeholder content, sanity -20, drive marked used
+- Cinematic intro block in run(): narrative beats, sets visited=True, shows items/exits manually
+- Typewriter effect: typewrite(text, char_delay=0.03, line_delay=0.4)
+- pause() in helpers.py (waits for Enter, erases blank line with ANSI) — available but not in use
+- help_desk_office added as real starting room
+- all_rooms and all_items dicts in rooms.py and items.py respectively
+- from items import * in rooms.py (pragmatic for small game)
 
 WHAT'S NEXT (in rough priority order)
 --------------------------------------
-1. Class refactor (Room, Player, Item, Game) — do this BEFORE adding new mechanics
-2. Write room descriptions and atmosphere for remaining IT building rooms
-3. Help desk office: planned as player start room (stub already in main.py, commented out)
-4. Add "use" verb mechanic — item state (powered/unpowered etc.) belongs on Item objects
-5. Plan Library and Theatre buildings (main game, post-tutorial)
-6. Sanity system implementation
+1. Write USB drive reveal content (placeholder: "YOUR USB FILE CONTENTS HERE" in handle_use)
+2. Write cinematic intro block content (3 placeholder typewrite() lines in run())
+3. Room descriptions for: parking_lot, south_stairwell, campus_exit, library, kepler_theatre
+4. Sanity system implementation
+5. Sanity-tiered descriptions for rooms and items (threshold dict pattern already on Item/Room)
 6. Zalgo/unicode text corruption at low sanity
-7. MIDI soundtrack (pygame.mixer, Satie Gnossienne No. 1)
-8. Multiple endings
+7. Plan Library and Theatre buildings (main game, post-tutorial)
+8. MIDI soundtrack (pygame.mixer, Satie Gnossienne No. 1)
+9. Multiple endings
 
 DEFERRED / NOTES (see docs/notes.txt for full list)
 ----------------------------------------------------
-- Oxford comma formatting for item lists — deferred until after class refactor
-- Sanity-gated item description tiers (normal → unsettling → wrong → incomprehensible)
+- Oxford comma formatting for item lists (currently "a X, a Y and a Z")
+- Pronoun reference ("take it") via last_item variable
+- Pause-in-descriptions: {pause} delimiter in description strings, split in typewrite/display_room
+- Screen flicker mechanic (ANSI reverse video) — deferred to polish phase
 - Inventory corruption at low sanity (items rename themselves)
 - Item names fragment via zalgo before descriptions go eldritch
-- Save fake arms / phlebotomy room for Library or Theatre building
-- Screen flicker mechanic (ANSI reverse video) — deferred to polish phase
-- parse() move to helpers.py deferred until class refactor
-- Pronoun reference ("take it") via last_item variable
 
 KEY ARCHITECTURE NOTES
 -----------------------
-- rooms dict: keys are lowercase strings ("it department", "broken keyboard", etc.)
-- locked_exits: set of (room_name, direction) tuples — unlock with .discard()
-- item_descriptions: flat dict, keys must match room items list exactly (all lowercase)
-- location tracked as local variable in main(), NOT in player dict
-- parse() returns (verb, noun) — strips articles, lowercases everything
-- helpers.py: typewrite(text, char_delay=0.03, line_delay=0.4), clear_screen() — no game state dependencies
-- colorama imported but commented out — reserved for sanity/zalgo color effects
+- rooms dict: keys are lowercase strings with spaces ("help desk office", "it department")
+- locked_exits: set of (room.name, direction) tuples — room.name must use spaces not underscores
+- Item.aliases: list of alternate input strings; resolved in room.get_item() and player.has_item()
+- Item.state: arbitrary string for stateful items (None by default)
+- parse() returns (verb, noun) — strips leading articles, lowercases everything
+- handle_use splits noun on " on ", strips articles from target_name after split
+- exit_labels() method on Game: shows "north (storage room)" for visited rooms, plain "north" otherwise
+- helpers.py: typewrite(), clear_screen(), pause() — no game state
+- from items import * in rooms.py — pragmatic, avoids updating imports when adding items
 
 MAP (IT Building)
 -----------------
-it department → north: storage, east: printing department, south: south hallway
+help desk office → east: it department
+it department → west: help desk office, north: storage room, east: printing department, south: south hallway
+storage room → south: it department
 printing department → west: it department, east: east hallway
 east hallway → west: printing department, south: atrium
 south hallway → north: it department, east: atrium, west: parking lot (LOCKED), south: south stairwell
-storage → south: it department
-atrium → north: east hallway, west: south hallway, south: exit
+atrium → north: east hallway, west: south hallway, south: exit (LOCKED)
 parking lot → east: south hallway
-south stairwell → north: south hallway, south: exit
-exit (Main Campus) → north: atrium, south: library, east: kepler theater
+south stairwell → north: south hallway, south: exit (LOCKED)
+exit (campus exterior) → north: atrium, south: library, east: kepler theatre
 
 STORY PREMISE
 -------------
 Player is generic IT staff. Receives a ServiceDesk ticket (urgent, passive-aggressive tone).
-Opening: rainy gray morning, player in their office, ticket appears on screen.
+Opening: rainy gray morning, player in help desk office, ticket appears on screen.
 Steps out to find the building empty — flickering lights, cryptic note(s) planned.
 Investigates. Finds keycard (belongs to missing intern) + broken workstation = inciting clue.
+USB drive in storage room contains a disturbing file (content TBD).
 IT building is tutorial. Library (LRC) and Theatre are main game.
 Tone: tongue-in-cheek dark academia. Think Control / Night Vale.
 Story draft in docs/story_notes.txt.

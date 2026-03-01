@@ -14,6 +14,11 @@ def typewrite(text: str, char_delay: float = 0.03, line_delay: float = 0.4) -> s
             time.sleep(char_delay)
     print()
 
+def pause():
+    input("")
+    sys.stdout.write("\033[A\033[K")
+    sys.stdout.flush()
+
 def clear_screen():
     subprocess.run('cls' if os.name == 'nt' else 'clear', shell=True)
 

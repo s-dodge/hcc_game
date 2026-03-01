@@ -30,15 +30,16 @@ class Item:
 
 helpdesk_workstation = Item(
     name="help desk workstation",
-    description="",
+    description="Your computer. The ticket for the password reset in the Library is up on the screen.",
     takeable=False,
     untakeable_reason="too heavy",
-    usable=True
+    usable=False,
+    aliases = ["workstation", "computer"]
 )
 
 filing_cabinet = Item(
     name="filing cabinet",
-    description = "",
+    description = "Your filing cabinet. Nothing in here but some old meeting notes.",
     takeable=False,
     untakeable_reason="too heavy",
 )
@@ -47,7 +48,7 @@ filing_cabinet = Item(
 book = Item(
     name="book",
     description="It's an untouched copy of 'Windows 11: Inside Out'.",
-    read_text="It seems to be a textbook about learning Windows 11. Truly fascinating."
+    read_text="It seems to be a textbook about learning Windows 11. Truly fascinating.\nThe pages are warm to the touch..."
 )
 
 bin_of_mice = Item(
@@ -58,10 +59,10 @@ bin_of_mice = Item(
 
 workstation = Item(
     name="workstation",
-    description="This workstation seems to be broken...maybe the intern was working on it...",
+    description="This workstation isn't functional...maybe the intern was working on it...",
     takeable=False,
     untakeable_reason="too heavy",
-    usable=True
+    usable=False
 )
 
 broken_keyboard = Item(
@@ -78,6 +79,13 @@ ddr5_ram = Item(
 
 # STORAGE ROOM
 
+power_cable = Item(
+    name="power cable",
+    description="A standard IEC power cable. These go missing all the time.",
+    aliases=["cable"],
+    usable=True
+)
+
 keycard = Item(
     name="keycard",
     description="It's the IT intern's keycard."
@@ -86,7 +94,7 @@ keycard = Item(
 usb_drive = Item(
     name="usb drive",
     description="A standard 64GB usb drive. What could be on it...?",
-    aliases=["drive"],
+    aliases=["drive", "usb"],
     usable=True
 )
 
@@ -103,13 +111,13 @@ sticky_note = Item(
 
 pamphlet = Item(
     name="pamphlet",
-    description="This is the Fall 2026 course catalogue. Didn't know these were out yet.",
+    description="This is the Fall 2026 course catalogue. Didn't know these were out yet...",
     read_text="This can't be right...HCC doesn't offer Ancient Sumerian as a language..."
 )
 
 poster = Item(
     name="poster",
-    description="It's a poster for Student Activities this summer."
+    description="It's a poster for Student Activities this summer\nThere's something strange about the students faces...you can't quite put your finger on it."
 )
 
 # ATRIUM
@@ -131,6 +139,7 @@ all_items = {
     "workstation": workstation,
     "broken keyboard": broken_keyboard,
     "stick of ddr5 ram": ddr5_ram,
+    "power cable": power_cable,
     "keycard": keycard,
     "usb drive": usb_drive,
     "sticky note": sticky_note,
