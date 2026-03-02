@@ -47,10 +47,10 @@ class Game:
         # Always show items and exits
         if room.items:
             if len(room.items) == 1:
-                typewrite(f"\nThere is a {room.items[0].name}.")
+                typewrite(f"\nYou see a {room.items[0].name}.")
             else:
                 all_but_last = ', a '.join(item.name for item in room.items[:-1])
-                typewrite(f"\nThere is a {all_but_last} and a {room.items[-1].name}.")
+                typewrite(f"\nYou see a {all_but_last} and a {room.items[-1].name}.")
         typewrite(f"\nExits: {self.exit_labels(room)}")
 
     def run(self):
@@ -149,6 +149,8 @@ Available commands:
             elif verb == "use":                 self.handle_use(noun)
             elif verb in ("inventory", "i"):    self.handle_inventory()
             elif verb == "leave":               self.handle_leave()
+            elif verb == "whoami":              print(f"[DEBUG] sanity={self.player.sanity}")
+            elif verb == "setsanity":           self.player.sanity = max(0, min(100, int(noun)))
             else:                               typewrite("Command not recognized.")
 
     def handle_go(self, noun):
@@ -206,7 +208,7 @@ Available commands:
         item = room.get_item(noun) or self.player.has_item(noun)
         if item:
             if item.is_readable:
-                typewrite(item.read_text)
+                typewrite(item.get_read_text(self.player.sanity))
             else:
                 typewrite("There's nothing written on this.")
         else:

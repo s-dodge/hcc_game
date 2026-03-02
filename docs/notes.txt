@@ -34,6 +34,14 @@ PARSER / ITEM ALIASES
 - These solve opposite problems but live together in items.py: aliases handle input, display_names handle output
 - Pipeline: player input → aliases → canonical key → display_names → shown to player
 
+SANITY TIER THRESHOLD CROSSING — ROOM VISITED RESET
+- When player's sanity crosses a tier boundary (e.g. drops from above 70 to below 70), reset all rooms' visited=False
+- This forces the new-tier description to show automatically on next entry, rather than requiring player to type 'look'
+- Implementation: wrap adjust_sanity in a Game helper method that checks tier before/after and resets rooms if tier changed
+- Tiers need to be defined as a constant in game.py (e.g. SANITY_TIERS = [70, 40]) so the tier-check can use them
+- Design question: reset ALL rooms or just the current one? All rooms is more dramatic; current room only is subtler
+- Deferred — implement after room sanity descriptions are written and tested
+
 ROOM DESCRIPTION SANITY TIERS
 - Room descriptions should change as sanity decreases, similar to item description tiers
 - Example: moss begins growing on walls at mid-low sanity, spreading/worsening as sanity drops further

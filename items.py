@@ -1,7 +1,8 @@
 class Item:
-    def __init__(self, name, description, aliases=None, read_text=None, takeable=True, untakeable_reason=None, usable=False, state=None, sanity_descriptions=None):
+    def __init__(self, name, description, sanity_name=None, aliases=None, read_text=None, takeable=True, untakeable_reason=None, usable=False, state=None, sanity_descriptions=None, sanity_read_texts=None):
         self.name = name
         self.description = description
+        self.sanity_name = sanity_name if sanity_name is not None else ""
         self.aliases = aliases if aliases is not None else []
         self.read_text = read_text
         self.takeable = takeable
@@ -9,12 +10,19 @@ class Item:
         self.usable = usable
         self.state = state
         self.sanity_descriptions = sanity_descriptions if sanity_descriptions is not None else {}
+        self.sanity_read_texts = sanity_read_texts if sanity_read_texts is not None else {}
 
     def get_description(self, sanity):
         for threshold in sorted(self.sanity_descriptions):
             if sanity <= threshold:
                 return self.sanity_descriptions[threshold]
         return self.description
+    
+    def get_read_text(self, sanity):
+        for threshold in sorted(self.sanity_read_texts):
+            if sanity <= threshold:
+                return self.sanity_read_texts[threshold]
+        return self.read_text
 
     @property
     def is_readable(self):
@@ -49,13 +57,16 @@ filing_cabinet = Item(
 book = Item(
     name="book",
     description="It's an untouched copy of 'Windows 11: Inside Out'. This could be useful...",
-    read_text="It seems to be a textbook about learning Windows 11. Truly fascinating.\nThe pages are warm to the touch..."
+    read_text="It seems to be a textbook about learning Windows 11. Truly fascinating.\nThe pages are warm to the touch...",
+    sanity_read_texts={70:"The cover reads 'Windows 11: Inside Out'...but the pages seem to be written in Latin.",40:"The grimoire writhes in your hands. The text is written in a language that predates human civilization. You understand every word."},
+    sanity_name={40:"Ancient Grimoire"}
 )
 
 bin_of_mice = Item(
     name="bin of mice",
     description="A bin of real living mice...no that can't be right. Of course, it's just computer mice.",
-    aliases=["mice"]
+    aliases=["mice"],
+    sanity_descriptions={70:"A bin of real living mice...that's not right...", 40:"The bin contains a writhing mass of living mice - their tails knotted together as they chitter unceasingly."}
 )
 
 workstation = Item(
@@ -104,7 +115,8 @@ sticky_note = Item(
     name="sticky note",
     description="A yellow sticky note. It says something...",
     aliases=["note"],
-    read_text='The note reads, "All assets must be signed out with date and technician name."'
+    read_text='The note reads, "All assets must be signed out with date and technician name."',
+    sanity_read_texts={70:"All assets must be signed out with a human soul and waiver of independent consciousness"}
 )
 
 

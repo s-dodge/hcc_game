@@ -21,17 +21,19 @@ Text-based horror adventure game (Python, CLI) embedded as an easter egg in a pe
 - GitHub: https://github.com/s-dodge/hcc_game.git | Branch: master
 
 ## Next Priorities (in order)
-1. Write USB drive reveal content (placeholder in game.py handle_use)
-2. Write cinematic intro block content (placeholders in game.py run())
-3. Room descriptions for: parking_lot, south_stairwell, campus_exit, library, kepler_theatre
-4. Sanity system implementation
-5. Plan Library and Theatre buildings
-6. Zalgo/unicode text corruption at low sanity
-7. MIDI soundtrack (pygame.mixer, Satie Gnossienne No. 1)
-8. Multiple endings
+1. Finish room sanity-tiered descriptions (atrium has placeholders; need real content + other rooms)
+2. Zalgo/unicode text corruption in typewrite() at low sanity
+3. sanity_cost on examine: items that should drain sanity when examined
+4. Badge/keycard unlock mechanic (use badge on door to unlock exits)
+5. USB drive persistent state redesign (see notes.txt)
+6. Write USB drive file content (placeholder in handle_use)
+7. Room descriptions: parking_lot, south_stairwell, campus_exit, library, kepler_theatre
+8. Plan Library and Theatre buildings
+9. MIDI soundtrack (pygame.mixer, Satie Gnossienne No. 1)
+10. Multiple endings
 
 ## Current Architecture
-- `Item`: name, description, aliases, takeable, untakeable_reason, usable, read_text, state, sanity_descriptions, inventory_description (planned)
+- `Item`: name, description, aliases, takeable, untakeable_reason, usable, read_text, state, sanity_descriptions, sanity_read_texts, sanity_name (parked)
 - `Room`: name, description, exits, items (list of Items), visited (bool), sanity_descriptions
 - `Player`: inventory (list), sanity (int 0-100), location (Room)
 - `Game`: rooms dict, player, locked_exits set, game loop, parse(), exit_labels(), display_room(), handle_*()
@@ -63,15 +65,16 @@ Text-based horror adventure game (Python, CLI) embedded as an easter egg in a pe
 - USB drive in storage room: disturbing file contents (TBD)
 - IT building is tutorial. Library (LRC) and Theatre are main game.
 
-## Sanity System (planned)
-- Drains as player examines things. No visible meter — player feels effects.
-- Threshold dict pattern already on Item and Room: `{75: "unsettling", 50: "wrong", 25: "incomprehensible"}`
-- Room descriptions change (moss growth motif)
-- Item descriptions change per threshold (e.g. "bin of mice" → real mice at low sanity)
-- Inventory corruption: items rename at low sanity ("badge"→"a tooth", "ddr3"→"a finger bone")
-- Zalgo/unicode fragmentation before descriptions go full eldritch
-- Sanity-gated workstation exit
-- See docs/notes.txt for full details
+## Sanity System (partially implemented)
+- Three tiers: normal (>70), unsettled (≤70), broken (≤40). No visible meter — player feels effects.
+- `whoami` (debug): prints current sanity. `setsanity [n]` (debug): sets sanity for testing. Both undocumented.
+- `get_description(sanity)` and `get_read_text(sanity)` on Item; `get_description(sanity)` on Room — all working.
+- `handle_read` updated to call `get_read_text(self.player.sanity)`.
+- Items with sanity tiers so far: bin_of_mice (descriptions), book (read_texts), sticky_note (read_texts).
+- Atrium room has placeholder sanity_descriptions for testing. Other rooms TBD.
+- Room visited reset on tier crossing: deferred (see notes.txt).
+- Still to implement: sanity_cost on examine, Zalgo text corruption in typewrite(), badge unlock mechanic.
+- See docs/notes.txt for full details and deferred ideas.
 
 ## User Preferences
 - Learning project: explain and guide, only make direct edits when explicitly asked

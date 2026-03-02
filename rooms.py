@@ -28,6 +28,8 @@ class Room:
 
 # --- Room instances ---
 
+# CPB BUILDING ROOMS
+
 help_desk_office = Room(
     name="help desk office",
     description="Your office - a small room in the main IT department. It's cold in here today, and quiet.",
@@ -71,7 +73,8 @@ storage_room = Room(
 atrium = Room(
     name="atrium",
     description="The lights in this large open area are flickering too...normally the natural light from the windows at the top of the room make this space inviting.\nWait...there are no lights here, just the windows...it's the sky that's flickering...\n\nNo that can't be right. It must have been a cloud passing the sun...",
-    exits={"north": "east hallway", "west": "south hallway", "south": "exit"}
+    exits={"north": "east hallway", "west": "south hallway", "south": "exit"},
+    sanity_descriptions={70:"Description_2", 40:"Description_3"}
 )
 
 parking_lot = Room(
@@ -104,6 +107,16 @@ kepler_theatre = Room(
     exits={}
 )
 
+
+# LRC BUILDING ROOMS
+
+# main_room = room(
+#     name="",
+#     description="",
+#     items=[],
+#     exits={"north":"","south":"","east":"","west":""},
+
+# )
 # --- World data ---
 
 all_rooms = {
