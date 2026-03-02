@@ -71,6 +71,18 @@ EXIT MECHANISM IDEAS
 - Question: should exit feel like escaping/fleeing or "logging out" of a simulation?
 - Sanity-gated exit creates real stakes: "explore more or get out while I still can?"
 
+USB DRIVE / WORKSTATION STATE (persistent content display)
+- After `use drive on workstation`, drive should NOT be consumed — instead:
+  1. Remove drive from player.inventory
+  2. Add drive to room.items (IT dept room)
+  3. Set drive.state = "inserted"
+  4. Set workstation.state = "displaying"
+- `examine workstation` (or `read workstation`) checks state == "displaying" and shows file contents
+- `take drive` works normally (drive is a room item); in handle_take(), after taking it, check
+  drive.state == "inserted" and reset workstation.state back to "powered"
+- drive.state drives its in-room description (e.g. "a USB drive is plugged into the workstation")
+- workstation description varies by state: off → powered on → displaying a file
+
 PAUSE IN DESCRIPTIONS
 - Want to call pause() inside room/item description strings, not just in game.py
 - Approach: use a {pause} delimiter in description strings, split on it in typewrite() or display_room(), call pause() between chunks

@@ -59,7 +59,7 @@ bin_of_mice = Item(
 
 workstation = Item(
     name="workstation",
-    description="This workstation isn't functional...maybe the intern was working on it...",
+    description="This workstation won't power on...maybe the intern was working on it...",
     takeable=False,
     untakeable_reason="too heavy",
     usable=False
@@ -100,9 +100,9 @@ usb_drive = Item(
 
 sticky_note = Item(
     name="sticky note",
-    description="A yellow sticky note. There's writing on it.",
+    description="A yellow sticky note. It says something...",
     aliases=["note"],
-    read_text='The note reads, "All assets must be signed out with date and technician name"'
+    read_text='The note reads, "All assets must be signed out with date and technician name."'
 )
 
 
@@ -111,7 +111,7 @@ sticky_note = Item(
 
 pamphlet = Item(
     name="pamphlet",
-    description="This is the Fall 2026 course catalogue. Didn't know these were out yet...",
+    description="This is the Fall 2026 course catalogue. Didn't know these were out yet...wonder what we're offering...",
     read_text="This can't be right...HCC doesn't offer Ancient Sumerian as a language..."
 )
 

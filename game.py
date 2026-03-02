@@ -63,15 +63,14 @@ class Game:
         clear_screen()
         # --- Intro beats ---
         typewrite("The morning is gray and cold, and rain patters lightly on the roof of the building and runs in slow rivulets down the window of your office.\n\n")
+        typewrite("You hear the hum of the heating system running behind the walls, and the boredom of the mid-semester is dragging the inexorable march of time down to a crawl\n\n")  
+        
         typewrite("A notification appears in the corner of your monitor. A ServiceDesk ticket has been assigned to you.\n\n")
         typewrite("The subject reads: \"Urgent - Password reset needed IN PERSON at the LRC. Can't get my work done. Send someone now if possible\"\n\n")
-        typewrite("Better take a look...\n")
+        # typewrite("Better take a look...\n")
         time.sleep(2)
-        clear_screen()
-
-        # --- Cinematic room intro (first visit only) ---
-        typewrite("You are in your office at HCC. You hear the hum of the heating system running behind the walls, and the boredom of the mid-semester is dragging the inexorable march of time down to a crawl \n")  
-        typewrite("At least this ticket has come up so you can take a walk.\n")  # add as many typewrite() lines as you need
+        typewrite("At least this ticket has come up so you can take a walk.\n\n")
+        typewrite("You stand and look at the door to the east. It leads to the main IT department office.\n")  # add as many typewrite() lines as you need
         typewrite("\n")  # delete unused lines when done
 
         # Mark as visited so returning here later shows the brief revisit version

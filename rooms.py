@@ -36,34 +36,34 @@ help_desk_office = Room(
 )
 
 it_department = Room(
-    name="it department",
-    description="The bright, fluorescent lights here illuminate stacks of old equipment and tangles of Cat6 cable...\n\nThe lights flicker...\n\nWhere is everyone...?",
+    name="IT department",
+    description="The bright, fluorescent lights here illuminate stacks of old equipment and tangles of Cat6 cable...\n\nThe lights flicker...\n\nWhere is everyone...?\nYou see your office to the west, the storage room to the north, the printing department to the east, and the exit to the south.",
     exits={"west": "help desk office", "north": "storage room", "east": "printing department", "south": "south hallway"},
     items=[ddr5_ram, book, workstation, broken_keyboard, bin_of_mice]
 )
 
 south_hallway = Room(
     name="south hallway",
-    description="The hallway is empty. You see the parking lot to the west, the atrium to the east, and a stairwell to the south.",
+    description="The hallway is empty.\nYou see the parking lot to the west, the atrium to the east, and a stairwell to the south.",
     exits={"north": "it department", "west": "parking lot", "east": "atrium", "south": "south stairwell"}
 )
 
 east_hallway = Room(
     name="east hallway",
-    description="The hallway is empty. Where is everyone...?",
+    description="The hallway is empty. Where is everyone...?\nYou see the Printing Department to the west and the Atrium to the south",
     exits={"west": "printing department", "south": "atrium"}
 )
 
 printing_department = Room(
     name="printing department",
-    description="The room is empty...Norm is usually here this time of day.",
+    description="The room is empty...Norm is usually here this time of day.\nYou see the exit to the hallways to the east and the IT Department to the west",
     exits={"east": "east hallway", "west": "it department"},
     items=[pamphlet, poster]
 )
 
 storage_room = Room(
     name="storage room",
-    description="The walls are lined with shelves of assets...power cables, monitors, laptop bags, network switches, and unnameable layer 3 devices.",
+    description="The walls are lined with shelves of assets...power cables, monitors, laptop bags, network switches, and unnameable layer 3 devices.\n The only exit is south, back to the IT Department.",
     exits={"south": "it department"},
     items=[power_cable, usb_drive, sticky_note, keycard]
 )
