@@ -53,7 +53,7 @@ DEFERRED / NOTES (see docs/notes.txt for full list)
 
 KEY ARCHITECTURE NOTES
 -----------------------
-- rooms dict: keys are lowercase strings with spaces ("help desk office", "it department")
+- rooms dict: keys are lowercase strings with spaces ("help desk office", "IT department")
 - locked_exits: set of (room.name, direction) tuples — room.name must use spaces not underscores
 - Item.aliases: list of alternate input strings; resolved in room.get_item() and player.has_item()
 - Item.state: arbitrary string for stateful items (None by default)
@@ -65,12 +65,12 @@ KEY ARCHITECTURE NOTES
 
 MAP (IT Building)
 -----------------
-help desk office → east: it department
-it department → west: help desk office, north: storage room, east: printing department, south: south hallway
-storage room → south: it department
-printing department → west: it department, east: east hallway
+help desk office → east: IT department
+IT department → west: help desk office, north: storage room, east: printing department, south: south hallway
+storage room → south: IT department
+printing department → west: IT department, east: east hallway
 east hallway → west: printing department, south: atrium
-south hallway → north: it department, east: atrium, west: parking lot (LOCKED), south: south stairwell
+south hallway → north: IT department, east: atrium, west: parking lot (LOCKED), south: south stairwell
 atrium → north: east hallway, west: south hallway, south: exit (LOCKED)
 parking lot → east: south hallway
 south stairwell → north: south hallway, south: exit (LOCKED)

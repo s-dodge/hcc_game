@@ -31,7 +31,7 @@ class Room:
 help_desk_office = Room(
     name="help desk office",
     description="Your office - a small room in the main IT department. It's cold in here today, and quiet.",
-    exits={"east": "it department"},
+    exits={"east": "IT department"},
     items=[helpdesk_workstation, filing_cabinet]
 )
 
@@ -45,7 +45,7 @@ it_department = Room(
 south_hallway = Room(
     name="south hallway",
     description="The hallway is empty.\nYou see the parking lot to the west, the atrium to the east, and a stairwell to the south.",
-    exits={"north": "it department", "west": "parking lot", "east": "atrium", "south": "south stairwell"}
+    exits={"north": "IT department", "west": "parking lot", "east": "atrium", "south": "south stairwell"}
 )
 
 east_hallway = Room(
@@ -57,14 +57,14 @@ east_hallway = Room(
 printing_department = Room(
     name="printing department",
     description="The room is empty...Norm is usually here this time of day.\nYou see the exit to the hallways to the east and the IT Department to the west",
-    exits={"east": "east hallway", "west": "it department"},
+    exits={"east": "east hallway", "west": "IT department"},
     items=[pamphlet, poster]
 )
 
 storage_room = Room(
     name="storage room",
     description="The walls are lined with shelves of assets...power cables, monitors, laptop bags, network switches, and unnameable layer 3 devices.\n The only exit is south, back to the IT Department.",
-    exits={"south": "it department"},
+    exits={"south": "IT department"},
     items=[power_cable, usb_drive, sticky_note, keycard]
 )
 
@@ -108,7 +108,7 @@ kepler_theatre = Room(
 
 all_rooms = {
     "help desk office": help_desk_office,
-    "it department": it_department,
+    "IT department": it_department,
     "south hallway": south_hallway,
     "east hallway": east_hallway,
     "printing department": printing_department,

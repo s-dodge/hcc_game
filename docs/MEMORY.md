@@ -35,7 +35,7 @@ Text-based horror adventure game (Python, CLI) embedded as an easter egg in a pe
 - `Room`: name, description, exits, items (list of Items), visited (bool), sanity_descriptions
 - `Player`: inventory (list), sanity (int 0-100), location (Room)
 - `Game`: rooms dict, player, locked_exits set, game loop, parse(), exit_labels(), display_room(), handle_*()
-- `rooms` dict keys: lowercase strings with spaces ("help desk office", "it department")
+- `rooms` dict keys: lowercase strings with spaces ("help desk office", "IT department")
 - `locked_exits`: set of `(room.name, direction)` tuples — room.name must use spaces not underscores
 - `from items import *` in rooms.py — pragmatic for small game, avoids updating imports when adding items
 - `Item.aliases`: list; resolved in `room.get_item()` and `player.has_item()`
