@@ -1,4 +1,4 @@
-from helpers import typewrite, clear_screen
+from helpers import typewrite, clear_screen, show_title_block, set_window, display_inventory
 import time
 
 class Game:
@@ -47,15 +47,16 @@ class Game:
         # Always show items and exits
         if room.items:
             if len(room.items) == 1:
-                typewrite(f"\nYou see a {room.items[0].name}.")
+                typewrite(f"\nThere is a {room.items[0].name}.")
             else:
                 all_but_last = ', a '.join(item.name for item in room.items[:-1])
-                typewrite(f"\nYou see a {all_but_last} and a {room.items[-1].name}.")
+                typewrite(f"\nThere is a {all_but_last} and a {room.items[-1].name}.")
         typewrite(f"\nExits: {self.exit_labels(room)}")
 
     def run(self):
+        set_window()
         clear_screen()
-        typewrite("Welcome to the Hagerstown Community College IT Help Desk Adventure!\nPress Enter to begin, or Q to quit\n")
+        show_title_block()
         selection = input("> ").strip().lower()
         if selection == "q":
             return
@@ -63,13 +64,13 @@ class Game:
         clear_screen()
         # --- Intro beats ---
         typewrite("The morning is gray and cold, and rain patters lightly on the roof of the building and runs in slow rivulets down the window of your office.\n\n")
-        typewrite("You hear the hum of the heating system running behind the walls, and the boredom of the mid-semester is dragging the inexorable march of time down to a crawl\n\n")  
+        typewrite("You hear the hum of the heating system running behind the walls, and the boredom of the mid-semester is dragging the inexorable march of time down to a crawl.\n\n")  
         
         typewrite("A notification appears in the corner of your monitor. A ServiceDesk ticket has been assigned to you.\n\n")
         typewrite("The subject reads: \"Urgent - Password reset needed IN PERSON at the LRC. Can't get my work done. Send someone now if possible\"\n\n")
         # typewrite("Better take a look...\n")
         time.sleep(2)
-        typewrite("At least this ticket has come up so you can take a walk.\n\n")
+        typewrite("At least this ticket has come up so you can take a walk...\n\n")
         typewrite("You stand and look at the door to the east. It leads to the main IT department office.\n")  # add as many typewrite() lines as you need
         typewrite("\n")  # delete unused lines when done
 
@@ -99,6 +100,7 @@ class Game:
             # Normalize multi-word verb phrases
             raw = raw.replace("pick up ", "take ", 1)
             raw = raw.replace("look at ", "examine ", 1)
+            raw = raw.replace("check out ", "examine", 1)
 
             verb, noun = self.parse(raw)
 
@@ -132,7 +134,9 @@ Available commands:
             elif verb == "x":            verb = "examine"
             elif verb == "l":            verb = "look"
             elif verb == "get":          verb = "take"
+            elif verb == "grab":         verb = "take"
             elif verb == "walk":         verb = "go"
+            elif verb == "head":         verb = "go"
 
             # Dispatch
             if verb == "go":                    self.handle_go(noun)
@@ -183,7 +187,7 @@ Available commands:
                 self.player.inventory.append(item)
                 typewrite(f"\nYou pick up the {item.name}. It is now in your inventory.")
             else:
-                reason = f", it's {item.untakeable_reason}" if item.untakeable_reason else ""
+                reason = f", {item.untakeable_reason}" if item.untakeable_reason else ""
                 typewrite(f"You can't take the {item.name}{reason}.")
         else:
             typewrite(f"\nYou don't see a {noun} here.")
@@ -254,13 +258,15 @@ some_other_file.txt
 """)  # replace with writing
                 self.player.adjust_sanity(-20)
 
+        elif not item.usable:
+            typewrite("You can't use this item.")        
+
         else:
             typewrite("You can't use that here.")
 
     def handle_inventory(self):
         if self.player.inventory:
-            items_str = ', \n'.join(item.name for item in self.player.inventory)
-            typewrite(f"Inventory:\n{items_str}")
+            display_inventory(self.player.inventory)
         else:
             typewrite("You aren't carrying anything.")
 

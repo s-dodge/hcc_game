@@ -26,8 +26,8 @@ PRONOUN REFERENCE ("take it", "read it", etc.)
 
 PARSER / ITEM ALIASES
 - Add item aliases so multi-word items can be referenced by shorter names
-- Example: "stick of ddr5 ram" should work with: "ram", "ddr5", "ddr5 ram", "stick"
-- Implement as dict mapping aliases to canonical item names: {"ram": "stick of ddr5 ram", "ddr5": "stick of ddr5 ram", ...}
+- Example: "stick of ddr3 ram" should work with: "ram", "ddr3", "ddr3 ram", "stick"
+- Implement as dict mapping aliases to canonical item names: {"ram": "stick of ddr3 ram", "ddr3": "stick of ddr3 ram", ...}
 - Parser should check aliases first, then fall back to exact match
 - Other examples: "bin of mice" → ["mice", "bin"], "broken keyboard" → ["keyboard"]
 - Related: display_names dict maps canonical key → formatted display string (e.g. "usb drive" → "usb drive")
@@ -43,12 +43,16 @@ ROOM DESCRIPTION SANITY TIERS
 
 SANITY EFFECTS
 - Item descriptions change as sanity drops (examine checks sanity threshold, returns alternate description)
+- inventory_description attribute on Item: short string shown in inventory table; separate from examine text
+  - Follow same threshold dict pattern as sanity_descriptions — display_inventory resolves tier from current sanity
+  - Three degradation axes: examine text (sanity_descriptions), inventory table description (inventory_description), item name corruption
+  - Fallback: if inventory_description is None, use item.description in table
 - Multiple tiers: normal → unsettling → wrong → incomprehensible
 - Example: "bin of mice" examine text changes from "computer mice" to real mice at low sanity
 - Items may disappear from or change in inventory as sanity drops
 - Items may appear in rooms that were not previously there ("You see X...was that here before?")
 - Rooms may appear in different places ("You have entered the AV Tech department...That's not right, AV Tech isn't in this building")
-- Inventory corruption: items rename themselves at low sanity ("keycard" → "a tooth", "ddr5" → "a finger bone")
+- Inventory corruption: items rename themselves at low sanity ("badge" → "a tooth", "ddr3" → "a finger bone")
 - Item names in room display and inventory fragment via zalgo/unicode before descriptions go full eldritch
 - Non-euclidian topology, eldrich runes, blood coverage as description tiers
 - Consider a dict of sanity-gated alternate descriptions per item keyed by threshold, e.g. {75: "unsettling text", 50: "wrong text", 25: "incomprehensible text"}
@@ -95,3 +99,20 @@ SCREEN FLICKER
 - Fallback: color flash with background fill if ANSI mode unsupported on target terminal
 - Lives in helpers.py alongside typewrite()
 
+MISCELLANEOUS THOUGHTS
+- Add out of place item, something that doesn't belong in at IT deparment, like a Brass Key "Your fingers tingle as you pick up the ornate brass key. It's almost as if the key were vibrating at a high frequency..."
+- Ancient object / sanity trigger: a floppy disk in the IT closet (plausible in old IT storage, "ancient technology" joke earns it)
+  - Placed behind the IT closet door, unlocked with badge — gated far enough into tutorial that horror has had time to simmer first
+  - Floppy disk has a handwritten label; examine before taking returns "There's a handwritten label on it. You try to read it, but your eyes keep sliding off the text."
+  - Transformation triggers on second examine (after taking): the label is now legible — in something that isn't a human alphabet. Sanity hit fires here.
+  - examine → take → examine again is the intended beat sequence; transformation on take is too abrupt
+
+THE INTERN
+- The IT intern is a cultist (or was one)
+- Their absence recontextualizes the whole IT building: badge left behind, broken workstation, USB drive, floppy disk in the closet
+- The service ticket ("urgent password reset at the LRC") may be the intern luring IT staff to the library — or someone/something else sending the player there
+- The intern is likely at the LRC (the main game destination)
+- Key question to decide: true believer, victim, or someone who stumbled in and didn't get out?
+  - True believer: badge left deliberately, clues are breadcrumbs laid on purpose
+  - Victim: badge dropped in panic, clues are distress signals
+  - Stumbled in: badge left innocently (forgot it), clues are accidental — scarier because it could happen to the player too

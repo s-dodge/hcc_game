@@ -1,6 +1,6 @@
 SESSION SUMMARY
 ===============
-Last updated: 2026-02-28 (session 3)
+Last updated: 2026-03-02 (session 5)
 
 WHERE WE ARE
 ------------
@@ -44,6 +44,7 @@ WHAT'S NEXT (in rough priority order)
 
 DEFERRED / NOTES (see docs/notes.txt for full list)
 ----------------------------------------------------
+- inventory_description attribute on Item: short table-friendly string, fallback to description; planned to follow sanity threshold dict pattern for corruption
 - Oxford comma formatting for item lists (currently "a X, a Y and a Z")
 - Pronoun reference ("take it") via last_item variable
 - Pause-in-descriptions: {pause} delimiter in description strings, split in typewrite/display_room
@@ -60,7 +61,9 @@ KEY ARCHITECTURE NOTES
 - parse() returns (verb, noun) — strips leading articles, lowercases everything
 - handle_use splits noun on " on ", strips articles from target_name after split
 - exit_labels() method on Game: shows "north (storage room)" for visited rooms, plain "north" otherwise
-- helpers.py: typewrite(), clear_screen(), pause() — no game state
+- helpers.py: typewrite(), clear_screen(), pause(), display_inventory() — no game state
+- display_inventory(inventory): rich Table with Item/Description columns, show_lines=True, max_width=60; called by handle_inventory()
+- `rich` library added (Table, Console imported in helpers.py)
 - from items import * in rooms.py — pragmatic, avoids updating imports when adding items
 
 MAP (IT Building)
@@ -81,7 +84,7 @@ STORY PREMISE
 Player is generic IT staff. Receives a ServiceDesk ticket (urgent, passive-aggressive tone).
 Opening: rainy gray morning, player in help desk office, ticket appears on screen.
 Steps out to find the building empty — flickering lights, cryptic note(s) planned.
-Investigates. Finds keycard (belongs to missing intern) + broken workstation = inciting clue.
+Investigates. Finds badge (belongs to missing intern) + broken workstation = inciting clue.
 USB drive in storage room contains a disturbing file (content TBD).
 IT building is tutorial. Library (LRC) and Theatre are main game.
 Tone: tongue-in-cheek dark academia. Think Control / Night Vale.

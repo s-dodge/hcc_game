@@ -39,7 +39,7 @@ it_department = Room(
     name="IT department",
     description="The bright, fluorescent lights here illuminate stacks of old equipment and tangles of Cat6 cable...\n\nThe lights flicker...\n\nWhere is everyone...?\nYou see your office to the west, the storage room to the north, the printing department to the east, and the exit to the south.",
     exits={"west": "help desk office", "north": "storage room", "east": "printing department", "south": "south hallway"},
-    items=[ddr5_ram, book, workstation, broken_keyboard, bin_of_mice]
+    items=[ddr3_ram, book, workstation, broken_keyboard, bin_of_mice]
 )
 
 south_hallway = Room(
@@ -65,12 +65,12 @@ storage_room = Room(
     name="storage room",
     description="The walls are lined with shelves of assets...power cables, monitors, laptop bags, network switches, and unnameable layer 3 devices.\n The only exit is south, back to the IT Department.",
     exits={"south": "IT department"},
-    items=[power_cable, usb_drive, sticky_note, keycard]
+    items=[power_cable, usb_drive, sticky_note, badge]
 )
 
 atrium = Room(
     name="atrium",
-    description="The lights in this large open area are flickering too...normally the natural light from the windows at the top of the room make this space inviting.\nYou realize that there are no lights...it's the sky that's flickering. No that can't be right. It must have been a cloud passing the sun.",
+    description="The lights in this large open area are flickering too...normally the natural light from the windows at the top of the room make this space inviting.\nWait...there are no lights here, just the windows...it's the sky that's flickering...\n\nNo that can't be right. It must have been a cloud passing the sun...",
     exits={"north": "east hallway", "west": "south hallway", "south": "exit"}
 )
 

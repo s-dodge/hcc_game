@@ -30,9 +30,9 @@ class Item:
 
 helpdesk_workstation = Item(
     name="help desk workstation",
-    description="Your computer. The ticket for the password reset in the Library is up on the screen.",
+    description="The computer screen glows in the dim office, casting an anaemic light into the room. The ticket for the password reset in the Library is up on the screen.",
     takeable=False,
-    untakeable_reason="too heavy",
+    untakeable_reason="it's too awkward to carry",
     usable=False,
     aliases = ["workstation", "computer"]
 )
@@ -41,13 +41,14 @@ filing_cabinet = Item(
     name="filing cabinet",
     description = "Your filing cabinet. Nothing in here but some old meeting notes.",
     takeable=False,
-    untakeable_reason="too heavy",
+    untakeable_reason="it's too heavy",
+    aliases=["cabinet", "drawers"]
 )
 
 # IT DEPARTMENT
 book = Item(
     name="book",
-    description="It's an untouched copy of 'Windows 11: Inside Out'.",
+    description="It's an untouched copy of 'Windows 11: Inside Out'. This could be useful...",
     read_text="It seems to be a textbook about learning Windows 11. Truly fascinating.\nThe pages are warm to the touch..."
 )
 
@@ -61,7 +62,7 @@ workstation = Item(
     name="workstation",
     description="This workstation won't power on...maybe the intern was working on it...",
     takeable=False,
-    untakeable_reason="too heavy",
+    untakeable_reason="it's too awkward to carry",
     usable=False
 )
 
@@ -71,10 +72,10 @@ broken_keyboard = Item(
     aliases=["keyboard"]
 )
 
-ddr5_ram = Item(
-    name="stick of ddr5 ram",
+ddr3_ram = Item(
+    name="stick of ddr3 ram",
     description="jackpot!",
-    aliases=["ram", "ddr5", "ddr5 ram"]
+    aliases=["ram", "ddr3", "ddr3 ram"]
 )
 
 # STORAGE ROOM
@@ -86,9 +87,10 @@ power_cable = Item(
     usable=True
 )
 
-keycard = Item(
-    name="keycard",
-    description="It's the IT intern's keycard."
+badge = Item(
+    name="badge",
+    description="It's the IT intern's badge.",
+    aliases=["id badge", "keycard"]
 )
 
 usb_drive = Item(
@@ -112,7 +114,8 @@ sticky_note = Item(
 pamphlet = Item(
     name="pamphlet",
     description="This is the Fall 2026 course catalogue. Didn't know these were out yet...wonder what we're offering...",
-    read_text="This can't be right...HCC doesn't offer Ancient Sumerian as a language..."
+    read_text="This can't be right...HCC doesn't offer Ancient Sumerian as a language...",
+    aliases=["catalogue", "course catalogue"]
 )
 
 poster = Item(
@@ -138,9 +141,9 @@ all_items = {
     "bin of mice": bin_of_mice,
     "workstation": workstation,
     "broken keyboard": broken_keyboard,
-    "stick of ddr5 ram": ddr5_ram,
+    "stick of ddr3 ram": ddr3_ram,
     "power cable": power_cable,
-    "keycard": keycard,
+    "badge": badge,
     "usb drive": usb_drive,
     "sticky note": sticky_note,
     "pamphlet": pamphlet,

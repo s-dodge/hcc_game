@@ -13,7 +13,7 @@ Text-based horror adventure game (Python, CLI) embedded as an easter egg in a pe
 - `game.py` - Game class: game loop, parse(), command dispatch, all handle_* methods
 - `items.py` - Item class + all item instances + `all_items` dict
 - `rooms.py` - Room class + all room instances + `all_rooms` dict + `locked_exits` set
-- `helpers.py` - `typewrite()`, `clear_screen()`, `pause()` — no game state
+- `helpers.py` - `typewrite()`, `clear_screen()`, `pause()`, `display_inventory()` — no game state; `rich` (Table, Console) imported here
 - `docs/notes.txt` - deferred ideas (always check this)
 - `docs/project.txt` - original design brief
 - `docs/story_notes.txt` - narrative/story draft
@@ -31,7 +31,7 @@ Text-based horror adventure game (Python, CLI) embedded as an easter egg in a pe
 8. Multiple endings
 
 ## Current Architecture
-- `Item`: name, description, aliases, takeable, untakeable_reason, usable, read_text, state, sanity_descriptions
+- `Item`: name, description, aliases, takeable, untakeable_reason, usable, read_text, state, sanity_descriptions, inventory_description (planned)
 - `Room`: name, description, exits, items (list of Items), visited (bool), sanity_descriptions
 - `Player`: inventory (list), sanity (int 0-100), location (Room)
 - `Game`: rooms dict, player, locked_exits set, game loop, parse(), exit_labels(), display_room(), handle_*()
@@ -53,13 +53,13 @@ Text-based horror adventure game (Python, CLI) embedded as an easter egg in a pe
 ## use Mechanic (implemented)
 - `power cable on workstation` → workstation.state="powered", description updates, cable consumed
 - `usb drive on powered workstation` → placeholder content shown, sanity -20, drive.state="used"
-- keycard: TBD
+- badge: TBD
 
 ## Story
 - Player: generic IT staff
 - Opening: rainy gray morning, player in help desk office, ServiceDesk ticket appears (urgent, passive-aggressive)
 - Steps out to find building empty — flickering lights, cryptic notes
-- Finds keycard (missing intern's) + broken workstation = inciting clue
+- Finds badge (missing intern's) + broken workstation = inciting clue
 - USB drive in storage room: disturbing file contents (TBD)
 - IT building is tutorial. Library (LRC) and Theatre are main game.
 
@@ -68,7 +68,7 @@ Text-based horror adventure game (Python, CLI) embedded as an easter egg in a pe
 - Threshold dict pattern already on Item and Room: `{75: "unsettling", 50: "wrong", 25: "incomprehensible"}`
 - Room descriptions change (moss growth motif)
 - Item descriptions change per threshold (e.g. "bin of mice" → real mice at low sanity)
-- Inventory corruption: items rename at low sanity ("keycard"→"a tooth", "ddr5"→"a finger bone")
+- Inventory corruption: items rename at low sanity ("badge"→"a tooth", "ddr3"→"a finger bone")
 - Zalgo/unicode fragmentation before descriptions go full eldritch
 - Sanity-gated workstation exit
 - See docs/notes.txt for full details
