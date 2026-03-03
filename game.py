@@ -1,6 +1,14 @@
 from helpers import typewrite, clear_screen, show_title_block, set_window, display_inventory
 import time
 
+SANITY_TIERS = [70, 40]
+
+def get_tier(sanity):
+    for threshold in sorted(SANITY_TIERS):
+        if sanity <= threshold:
+            return threshold
+    return None
+
 class Game:
 
     def __init__(self, player, rooms=None, locked_exits=None):
@@ -65,14 +73,10 @@ class Game:
         # --- Intro beats ---
         typewrite("The morning is gray and cold, and rain patters lightly on the roof of the building and runs in slow rivulets down the window of your office.\n\n")
         typewrite("You hear the hum of the heating system running behind the walls, and the boredom of the mid-semester is dragging the inexorable march of time down to a crawl.\n\n")  
-        
         typewrite("A notification appears in the corner of your monitor. A ServiceDesk ticket has been assigned to you.\n\n")
         typewrite("The subject reads: \"Urgent - Password reset needed IN PERSON at the LRC. Can't get my work done. Send someone now if possible\"\n\n")
-        # typewrite("Better take a look...\n")
-        time.sleep(2)
         typewrite("At least this ticket has come up so you can take a walk...\n\n")
         typewrite("You stand and look at the door to the east. It leads to the main IT department office.\n")  # add as many typewrite() lines as you need
-        typewrite("\n")  # delete unused lines when done
 
         # Mark as visited so returning here later shows the brief revisit version
         self.player.location.visited = True
@@ -149,9 +153,23 @@ Available commands:
             elif verb == "use":                 self.handle_use(noun)
             elif verb in ("inventory", "i"):    self.handle_inventory()
             elif verb == "leave":               self.handle_leave()
+            # DEBUG / HELPERS
             elif verb == "whoami":              print(f"[DEBUG] sanity={self.player.sanity}")
             elif verb == "setsanity":           self.player.sanity = max(0, min(100, int(noun)))
+            elif verb == "drain":               self.apply_sanity(-10)
+            elif verb == "bump":                self.apply_sanity(10)
             else:                               typewrite("Command not recognized.")
+
+    def apply_sanity(self, delta):
+        before = get_tier(self.player.sanity)
+        self.player.adjust_sanity(delta)
+        after = get_tier(self.player.sanity)
+
+        if after != before:
+            for room in self.rooms.values():
+                room.visited = False
+            typewrite("\nSomething has changed...\n\n")
+            self.display_room(self.player.location, force_full=True)
 
     def handle_go(self, noun):
         room = self.player.location
@@ -258,7 +276,7 @@ Available commands:
 some_file.txt
 some_other_file.txt
 """)  # replace with writing
-                self.player.adjust_sanity(-20)
+                self.apply_sanity(-20)
 
         elif not item.usable:
             typewrite("You can't use this item.")        
@@ -278,3 +296,5 @@ some_other_file.txt
             self.handle_go(list(exits.keys())[0])
         else:
             typewrite(f"Which way? ({', '.join(exits)})")
+
+
