@@ -5,6 +5,22 @@ import time
 import subprocess
 import os
 import msvcrt
+import random
+import unicodedata
+
+ZALGO_UP = [chr(c) for c in range (0x0300, 0x036F)]
+ZALGO_DOWN = [chr(c) for c in range(0x0316, 0x0333)]
+
+def zalgo_corrupt(text,intensity=1):
+    result = []
+    for char in text:
+        result.append(char)
+        if char.isalpha():
+            for _ in range(random.randint(0, intensity * 2)):
+                result.append(random.choice(ZALGO_UP))
+            for _ in range(random.randint(0, intensity)):
+                result.append(random.choice(ZALGO_DOWN))
+    return ''.join(result)
 
 # --- typewriter function for better text presentation ---
 def typewrite(text: str, char_delay: float = 0.03, line_delay: float = 0.4) -> str:
@@ -26,7 +42,8 @@ def typewrite(text: str, char_delay: float = 0.03, line_delay: float = 0.4) -> s
         if char == "\n":  # increase delay for new lines for better flow
             time.sleep(line_delay)
         else:
-            time.sleep(char_delay)
+            time.sleep(0.001 if unicodedata.combining(char) else char_delay)
+
     print()
 
 def pause():

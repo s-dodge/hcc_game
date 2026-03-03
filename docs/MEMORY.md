@@ -1,7 +1,9 @@
 # HCC Game - Project Memory
 
 ## What This Is
-Text-based horror adventure game (Python, CLI) embedded as an easter egg in a personal IT helpdesk CLI tool. Set at Hagerstown Community College. Tone: Control/Night Vale — genuinely eerie but darkly humorous. Target length: <30 minutes.
+Text-based horror adventure game (Python, CLI) embedded as an easter egg in a personal IT helpdesk CLI tool. Set at Hagerstown Community College. Target length: <30 minutes.
+
+**Tone:** Classic horror — dread, uncanny, straight-faced. The humor comes entirely from the mundane setting (community college); the horror content itself is never winking or ironic. Cognitive dissonance between container and content does the work. Not Night Vale-style bureaucratic comedy.
 
 ## CRITICAL: Session Behavior
 **This is a learning project.** Do NOT write or edit code directly unless explicitly asked.
@@ -21,16 +23,14 @@ Text-based horror adventure game (Python, CLI) embedded as an easter egg in a pe
 - GitHub: https://github.com/s-dodge/hcc_game.git | Branch: master
 
 ## Next Priorities (in order)
-1. Finish room sanity-tiered descriptions (atrium has placeholders; need real content + other rooms)
-2. Zalgo/unicode text corruption in typewrite() at low sanity
-3. sanity_cost on examine: items that should drain sanity when examined
-4. Badge/keycard unlock mechanic (use badge on door to unlock exits)
-5. USB drive persistent state redesign (see notes.txt)
-6. Write USB drive file content (placeholder in handle_use)
-7. Room descriptions: parking_lot, south_stairwell, campus_exit, library, kepler_theatre
-8. Plan Library and Theatre buildings
-9. MIDI soundtrack (pygame.mixer, Satie Gnossienne No. 1)
-10. Multiple endings
+1. Finish room sanity-tiered descriptions (atrium needs real content; all other rooms TBD)
+2. sanity_cost on examine: items that should drain sanity when examined
+3. Badge/keycard unlock mechanic (use badge on door to unlock exits)
+4. USB drive persistent state redesign (see notes.txt — stays in room, workstation.state = "displaying")
+5. Room descriptions: parking_lot, south_stairwell, campus_exit, library, kepler_theatre
+6. Plan Library and Theatre buildings
+7. MIDI soundtrack (pygame.mixer, Satie Gnossienne No. 1)
+8. Multiple endings
 
 ## Current Architecture
 - `Item`: name, description, aliases, takeable, untakeable_reason, usable, read_text, state, sanity_descriptions, sanity_read_texts, sanity_name (parked)
@@ -65,15 +65,19 @@ Text-based horror adventure game (Python, CLI) embedded as an easter egg in a pe
 - USB drive in storage room: disturbing file contents (TBD)
 - IT building is tutorial. Library (LRC) and Theatre are main game.
 
-## Sanity System (partially implemented)
+## Sanity System
 - Three tiers: normal (>70), unsettled (≤70), broken (≤40). No visible meter — player feels effects.
 - `whoami` (debug): prints current sanity. `setsanity [n]` (debug): sets sanity for testing. Both undocumented.
 - `get_description(sanity)` and `get_read_text(sanity)` on Item; `get_description(sanity)` on Room — all working.
 - `handle_read` updated to call `get_read_text(self.player.sanity)`.
-- Items with sanity tiers so far: bin_of_mice (descriptions), book (read_texts), sticky_note (read_texts).
-- Atrium room has placeholder sanity_descriptions for testing. Other rooms TBD.
+- Items with sanity tiers: bin_of_mice (descriptions), book (read_texts), sticky_note (read_texts ≤70 and ≤40).
+  - sticky_note ≤40: blank/unreadable — player can't process the words. No eldritch content, just absence.
+- Rooms with sanity tiers: IT department (≤70 moss, ≤40 breathing walls/ichor), atrium (placeholders).
+- `zalgo_corrupt(text, intensity)` in helpers.py: ZALGO_UP + ZALGO_DOWN combining chars on alpha text.
+  - typewrite() skips char_delay for combining chars. zalgo_corrupt imported in game.py.
+  - Used for USB drive file content display (intensity=3).
 - Room visited reset on tier crossing: deferred (see notes.txt).
-- Still to implement: sanity_cost on examine, Zalgo text corruption in typewrite(), badge unlock mechanic.
+- Still to implement: sanity_cost on examine, badge unlock mechanic.
 - See docs/notes.txt for full details and deferred ideas.
 
 ## User Preferences

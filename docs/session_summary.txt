@@ -1,12 +1,17 @@
 SESSION SUMMARY
 ===============
-Last updated: 2026-03-02 (session 5)
+Last updated: 2026-03-03 (session 8)
 
 WHERE WE ARE
 ------------
-Class refactor is complete. Game is playable end-to-end through the IT building.
-All core mechanics are implemented: navigation, examine, take, drop, read, use, inventory.
-`use [item] on [target]` is working with the power cable + workstation puzzle chain.
+Sessions 6-7: Sanity system implemented. Three tiers (normal >70, unsettled ≤70, broken ≤40).
+Sanity-tiered descriptions working on items (bin_of_mice, book, sticky_note) and rooms (atrium placeholders).
+Debug commands: `whoami` (print sanity), `setsanity [n]` (set sanity). Undocumented.
+apply_sanity() wired up to relevant actions.
+
+Session 8: Zalgo corruption implemented and deployed. USB drive file content written.
+IT department room sanity descriptions added. Tone clarified (see below).
+
 
 WHAT'S WORKING
 --------------
@@ -22,7 +27,14 @@ WHAT'S WORKING
 - Item.state: used for workstation (powered) and usb_drive (used) state tracking
 - use [item] on [target] mechanic:
   - power cable on workstation → workstation.state = "powered", description updates, cable consumed
-  - usb drive on powered workstation → shows placeholder content, sanity -20, drive marked used
+  - usb drive on powered workstation → shows zalgo-corrupted eldritch text, sanity -20, drive marked used
+- Sanity system: three tiers (>70 normal, ≤70 unsettled, ≤40 broken), no visible meter
+  - Item.sanity_descriptions, Item.sanity_read_texts, Room.sanity_descriptions all working
+  - Tiered items: bin_of_mice (descriptions), book (read_texts), sticky_note (read_texts at ≤70 and ≤40)
+  - Tiered rooms: IT department (≤70 and ≤40 written), atrium (placeholder tiers in)
+  - Debug: `whoami` prints sanity, `setsanity [n]` sets it — undocumented
+- zalgo_corrupt(text, intensity) in helpers.py: combines ZALGO_UP/DOWN combining chars onto alpha chars
+  - typewrite() updated to skip char_delay for combining characters (so zalgo renders cleanly)
 - Cinematic intro block in run(): narrative beats, sets visited=True, shows items/exits manually
 - Typewriter effect: typewrite(text, char_delay=0.03, line_delay=0.4)
 - pause() in helpers.py (waits for Enter, erases blank line with ANSI) — available but not in use
@@ -32,15 +44,14 @@ WHAT'S WORKING
 
 WHAT'S NEXT (in rough priority order)
 --------------------------------------
-1. Write USB drive reveal content (placeholder: "YOUR USB FILE CONTENTS HERE" in handle_use)
-2. Write cinematic intro block content (3 placeholder typewrite() lines in run())
-3. Room descriptions for: parking_lot, south_stairwell, campus_exit, library, kepler_theatre
-4. Sanity system implementation
-5. Sanity-tiered descriptions for rooms and items (threshold dict pattern already on Item/Room)
-6. Zalgo/unicode text corruption at low sanity
-7. Plan Library and Theatre buildings (main game, post-tutorial)
-8. MIDI soundtrack (pygame.mixer, Satie Gnossienne No. 1)
-9. Multiple endings
+1. Finish room sanity-tiered descriptions (atrium needs real content; other rooms TBD)
+2. sanity_cost on examine: items that should drain sanity when examined
+3. Badge/keycard unlock mechanic (use badge on door to unlock exits)
+4. USB drive persistent state redesign (see notes.txt — drive stays in room, workstation.state = "displaying")
+5. Room descriptions: parking_lot, south_stairwell, campus_exit, library, kepler_theatre
+6. Plan Library and Theatre buildings (main game, post-tutorial)
+7. MIDI soundtrack (pygame.mixer, Satie Gnossienne No. 1)
+8. Multiple endings
 
 DEFERRED / NOTES (see docs/notes.txt for full list)
 ----------------------------------------------------
@@ -85,9 +96,10 @@ Player is generic IT staff. Receives a ServiceDesk ticket (urgent, passive-aggre
 Opening: rainy gray morning, player in help desk office, ticket appears on screen.
 Steps out to find the building empty — flickering lights, cryptic note(s) planned.
 Investigates. Finds badge (belongs to missing intern) + broken workstation = inciting clue.
-USB drive in storage room contains a disturbing file (content TBD).
+USB drive in storage room contains a disturbing file (zalgo-corrupted eldritch text).
 IT building is tutorial. Library (LRC) and Theatre are main game.
-Tone: tongue-in-cheek dark academia. Think Control / Night Vale.
+Tone: classic straight horror. The comedy is the mundane community college container — horror content is
+never winking or ironic. Cognitive dissonance does the work.
 Story draft in docs/story_notes.txt.
 
 GITHUB

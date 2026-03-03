@@ -38,7 +38,7 @@ class Item:
 
 helpdesk_workstation = Item(
     name="help desk workstation",
-    description="The computer screen glows in the dim office, casting an anaemic light into the room. The ticket for the password reset in the Library is up on the screen.",
+    description="The monitor glows in the dim office, casting an anaemic light into the room. The ticket for the password reset in the Library is up on the screen.",
     takeable=False,
     untakeable_reason="it's too awkward to carry",
     usable=False,
@@ -58,7 +58,8 @@ book = Item(
     name="book",
     description="It's an untouched copy of 'Windows 11: Inside Out'. This could be useful...",
     read_text="It seems to be a textbook about learning Windows 11. Truly fascinating.\nThe pages are warm to the touch...",
-    sanity_read_texts={70:"The cover reads 'Windows 11: Inside Out'...but the pages seem to be written in Latin.",40:"The grimoire writhes in your hands. The text is written in a language that predates human civilization. You understand every word."},
+    sanity_read_texts={70:"The cover reads 'Windows 11: Inside Out'...but the pages seem to be written in Latin.",
+                       40:"The book writhes in your hands. The text is written in a language that predates human civilization. You understand every word."},
     sanity_name={40:"Ancient Grimoire"}
 )
 
@@ -66,11 +67,13 @@ bin_of_mice = Item(
     name="bin of mice",
     description="A bin of real living mice...no that can't be right. Of course, it's just computer mice.",
     aliases=["mice"],
-    sanity_descriptions={70:"A bin of real living mice...that's not right...", 40:"The bin contains a writhing mass of living mice - their tails knotted together as they chitter unceasingly."}
+    sanity_descriptions={70:"A bin of real living mice...that's not right...", 
+                         40:"The bin contains a writhing mass of living mice - their tails knotted together as they chitter unceasingly."}
 )
 
 workstation = Item(
     name="workstation",
+    aliases=["computer"],
     description="This workstation won't power on...maybe the intern was working on it...",
     takeable=False,
     untakeable_reason="it's too awkward to carry",
@@ -116,7 +119,8 @@ sticky_note = Item(
     description="A yellow sticky note. It says something...",
     aliases=["note"],
     read_text='The note reads, "All assets must be signed out with date and technician name."',
-    sanity_read_texts={70:"All assets must be signed out with a human soul and waiver of independent consciousness"}
+    sanity_read_texts={70:"The note reads: All assets must be signed out with a human soul and waiver of independent consciousness",
+                       40:"The words are in English. You've read them three times. You can't tell what they say...your eyes refuse to focus on the words"}
 )
 
 

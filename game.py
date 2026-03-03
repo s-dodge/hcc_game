@@ -1,4 +1,4 @@
-from helpers import typewrite, clear_screen, show_title_block, set_window, display_inventory
+from helpers import typewrite, clear_screen, show_title_block, set_window, display_inventory, zalgo_corrupt
 import time
 
 SANITY_TIERS = [70, 40]
@@ -272,11 +272,10 @@ Available commands:
             else:
                 item.state = "used"
                 typewrite("You insert the drive...\n\n")
-                typewrite("""
-some_file.txt
-some_other_file.txt
-""")  # replace with writing
+                typewrite(zalgo_corrupt("""\n\n
+Cahf ah nafl mglw'nafh hh' ahor syha'h ah'legeth, ng llll or'azath syha'hnahh n'ghftephai n'gha ahornah ah'mglw'nafh\n""", 3))
                 self.apply_sanity(-20)
+
 
         elif not item.usable:
             typewrite("You can't use this item.")        
