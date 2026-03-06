@@ -127,8 +127,8 @@ sticky_note = Item(
 
 # PRINTING DEPARTMENT
 
-pamphlet = Item(
-    name="pamphlet",
+course_catalogue = Item(
+    name="course catalogue",
     description="This is the Fall 2026 course catalogue. Didn't know these were out yet...wonder what we're offering...",
     read_text="This can't be right...HCC doesn't offer Ancient Sumerian as a language...",
     aliases=["catalogue", "course catalogue"]
@@ -162,7 +162,7 @@ all_items = {
     "badge": badge,
     "usb drive": usb_drive,
     "sticky note": sticky_note,
-    "pamphlet": pamphlet,
+    "course catalogue": course_catalogue,
     "poster": poster,
 }
 

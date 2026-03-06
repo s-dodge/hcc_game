@@ -1,0 +1,250 @@
+STORY PLAN & OUTLINE
+====================
+Use this document to develop the narrative before writing in-game content.
+Fill in the blanks, answer the questions, write rough prose — whatever helps.
+Once complete, every room description and item should have a reason to exist.
+
+
+================================================================================
+PART 1: THE PREMISE QUESTION
+================================================================================
+The single question the player is trying to answer. Everything in the game is
+evidence toward this answer. Write it as a question the player would ask out loud.
+
+Example: "What happened to the intern, and what did they find?"
+
+YOUR PREMISE QUESTION:
+[ What happened to everyone, where is the intern specifically, and why do I have such a bad feeling ]
+
+
+================================================================================
+PART 2: THE WORLD BEFORE YOU ARRIVED
+================================================================================
+The most important story is the one the player discovers, not experiences.
+Something happened in this building before the player walked in.
+Tell that story here in plain prose — doesn't have to be polished.
+
+This backstory will never appear in the game directly. It lives in your head
+(and here) so that every item and room description is evidence of it.
+
+THE INTERN
+----------
+Name (optional, may never appear in game): Cade Hollis
+
+Who were they?
+(student worker, work-study, part-time — what was their deal?)
+The "intern" is a student worker, they're 19 years old in their final semester at HCC. They are pretty normal, if quiet. Non-disruptive and good at their job, which is mostly imaging machines and replacing components for faculty/staff.
+
+How did they first encounter it?
+(what was the ordinary thing that turned out not to be?)
+They found a copy of The King in Yellow at the local used bookstore. The book had hand written notes (some ideas, some footnotes, some questions, some references to Borges and other authors that may have had some insight into the unknown reaches of the human mind), as well as a few scraps of paper, one of which was a sheet of notebook paper with URLs for internet forums written on it. The forums were places for people with like ideas about the unknowable horror beneath the thin veil of reality, etc
+
+What did they find?
+(the USB drive? something in the library? what is on that drive, really?)
+They found information - the dove deep into forums, articles, they dug into the twilit grotto's Esoteric Archives. They became obsessed with the intersection of technology, the infinite, labyrinths, eldritch gods
+
+What did they do with what they found?
+(did they investigate? run? try to tell someone? leave breadcrumbs?)
+They become obsessed, and decided to transcribe some spells to disk instead of writing them down in a book or grimoire
+
+What happened to them?
+(are they gone? changed? still somewhere in the building?)
+They were consumed by the edldritch horror, a victim of their own hubris. The echo of their conciousness is what is changing the school - It's trying to regain its body...by taking the player's
+
+Are they a true believer, a victim, or someone who stumbled in?
+True believer, zealot out of their depth
+
+THE TICKET
+----------
+Who sent the "urgent password reset" ticket?
+That's the weird thing - the Requester field is blank. That doesn't happen. The ticket was created by the intern via some eldritch SSH function
+
+Is it genuine, a trap, or something else entirely?
+It's a trap, intentional or no. The consciousness is only partial and may not have a true motivation other than trying to find a host - like water running downhill
+
+Does the sender know what they're doing, or are they a victim too?
+Both, sort of
+
+
+================================================================================
+PART 3: THE THING ITSELF
+================================================================================
+What is the eldritch presence? It doesn't need a name or a clear shape —
+in fact it's scarier without one — but it needs a logic. What does it want?
+How does it work? What are its rules?
+The presence is an unnamed ancient god
+
+What is it?
+(ancient entity, something summoned, something that was always here, other?)
+
+What does it want?
+(consumption? worship? something stranger?)
+
+What are its rules / limits?
+(what can it do? what can't it do? does it need something from the player?)
+
+How does it manifest in the IT building vs. the library vs. the theatre?
+(same entity, different face — how does it express itself in each location?)
+
+Does the intern matter to it, or were they just in the way?
+The horror is wearing Al's echo like a glove. It didn't become Al — it picked him up.
+Al is still in there somewhere, just not driving. The thing knows the building, knows the
+systems, knows how to generate a ServiceDesk ticket — not because it's intelligent, but
+because it's wearing someone who was.
+
+
+================================================================================
+PART 4: THE PLAYER CHARACTER
+================================================================================
+The player doesn't need a name or a history, but they need a texture.
+Even one detail makes the horror land harder.
+
+Who are they in one sentence?
+(tired, underpaid, been here 8 years, doesn't want to be here today)
+
+What do they want at the start of the game?
+(resolve the ticket and go home — this is the mundane goal the horror interrupts)
+
+What do they stand to lose?
+(sanity is mechanical — but what's the human version? what would it mean to
+not make it out? is there anyone waiting for them?)
+
+
+================================================================================
+PART 5: THE ESCALATION MAP
+================================================================================
+Horror should get worse as the player goes deeper. Map it across three axes:
+
+                    IT BUILDING     |    LIBRARY (LRC)    |    THEATRE
+                    (tutorial)      |    (main game)      |    (climax)
+--------------------+----------------+---------------------+------------------
+KNOWLEDGE           |                |                     |
+(what player knows) |                |                     |
+--------------------+----------------+---------------------+------------------
+ENVIRONMENT         |                |                     |
+(how wrong is it)   |                |                     |
+--------------------+----------------+---------------------+------------------
+SANITY COST         |                |                     |
+(how much does it   |                |                     |
+drain here)         |                |                     |
+
+Notes on escalation:
+- IT building: wrong but explainable. Could be a maintenance issue. Could be stress.
+- Library: wrong and inexplicable. No mundane explanation holds anymore.
+- Theatre: the rules don't apply here. Space, logic, and language start to fail.
+
+
+================================================================================
+PART 6: THE REVELATION
+================================================================================
+The pivot moment — one beat where the player realizes the rules have changed,
+or that something they assumed was safe turns out not to be. This is the
+emotional hinge of the whole game.
+
+Where does it happen?
+(which room, which item, which action triggers it?)
+
+What does the player learn?
+(what assumption gets shattered?)
+
+What does it cost?
+(sanity hit? item gone? exit locked?)
+
+
+================================================================================
+PART 7: MEANINGFUL CHOICES
+================================================================================
+Even 1-2 real choices makes the player feel like they're in a story.
+These don't need to branch widely — they can converge — but they should
+cost something or reveal something.
+
+CHOICE 1:
+What is the decision?
+What are the options?
+What does each option cost or reveal?
+How does it affect the ending?
+
+CHOICE 2 (optional):
+What is the decision?
+What are the options?
+What does each option cost or reveal?
+How does it affect the ending?
+
+
+================================================================================
+PART 8: THE ENDINGS
+================================================================================
+The ending answers the premise question. Its emotional color is determined
+by what the player knows and how much of themselves is left.
+
+Think about 2-3 endings shaped by sanity + choices, not complex branching.
+
+Example structure:
+  - High sanity + right choices: escape with understanding. Costs something.
+  - Low sanity: escape but you're not sure what you left behind.
+  - Specific bad choice: don't escape at all.
+
+ENDING A (best):
+Condition(s):
+What happens:
+What does the player understand:
+
+ENDING B (default):
+Condition(s):
+What happens:
+What does the player understand:
+
+ENDING C (worst / bad):
+Condition(s):
+What happens:
+What does the player understand:
+
+
+================================================================================
+PART 9: THE EVIDENCE MAP
+================================================================================
+Once the above is filled in, use this section to map each existing item and
+room to the story it tells. Every item should be evidence of something.
+
+ITEM → WHAT IT REVEALS
+-----------------------
+helpdesk_workstation    : [ ]
+filing_cabinet          : [ ]
+book (Windows 11)       : [ ]
+ddr5_ram                : [ ]
+workstation             : [ ]
+broken_keyboard         : [ ]
+bin_of_mice             : [ ]
+power_cable             : [ ]
+usb_drive               : [ ]
+sticky_note             : [ ]
+keycard/badge           : [ ]
+course catalogue                : [ ]
+poster                  : [ ]
+
+ROOM → WHAT IT REVEALS / WHAT HAPPENED HERE
+--------------------------------------------
+help desk office        : [ ]
+IT department           : [ ]
+storage room            : [ ]
+printing department     : [ ]
+east hallway            : [ ]
+south hallway           : [ ]
+atrium                  : [ ]
+parking lot             : [ ]
+south stairwell         : [ ]
+campus exterior         : [ ]
+library (LRC)           : [ ] (plan TBD)
+kepler theatre          : [ ] (plan TBD)
+
+
+================================================================================
+PART 10: OPEN QUESTIONS / THINGS TO DECIDE
+================================================================================
+Use this section as a scratch pad for things you're not sure about yet.
+
+- The intern is either totally hapless and innocently pulled into this (found artifact), or 100% a dyed-in-the-wool cultist (neophite, untrained but eager, placed artifact). Maybe they read "The King in Yellow" too closely.
+  -If innocent, who did place the artifact?
+- I think it's funnier if the Help Desk Player actually really loves their job and loves being there - this may be harder to write narratively
+- Does the library exist in some sort of temporally dissonant space - like the decor is familiar but the computers are all from 1992 (like the kind that may have an A:\ drive and floppy disk reader, perhaps)
+- Maybe they tried the USB first and it didn't work the way they needed it to, they needed some other storage media, which is where the floppy will come in.

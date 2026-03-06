@@ -108,7 +108,7 @@ class Game:
 
             verb, noun = self.parse(raw)
 
-            if verb in ("q", "quit", "exit"):
+            if verb in ("q", "quit"):
                 break
 
             elif verb in ("help", "h"):
@@ -141,6 +141,8 @@ Available commands:
             elif verb == "grab":         verb = "take"
             elif verb == "walk":         verb = "go"
             elif verb == "head":         verb = "go"
+            elif verb == "crawl":        verb = "go"
+            elif verb == "run":          verb = "go"
 
             # Dispatch
             if verb == "go":                    self.handle_go(noun)
@@ -153,6 +155,7 @@ Available commands:
             elif verb == "use":                 self.handle_use(noun)
             elif verb in ("inventory", "i"):    self.handle_inventory()
             elif verb == "leave":               self.handle_leave()
+            elif verb == "exit":                self.handle_leave()
             # DEBUG / HELPERS
             elif verb == "whoami":              print(f"[DEBUG] sanity={self.player.sanity}")
             elif verb == "setsanity":           self.player.sanity = max(0, min(100, int(noun)))

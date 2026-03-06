@@ -42,7 +42,7 @@ it_department = Room(
     description="The bright, fluorescent lights here illuminate stacks of old equipment and tangles of Cat6 cable...\n\nThe lights flicker...\n\nWhere is everyone...?\nYou see your office to the west, the storage room to the north, the printing department to the east, and the exit to the south.",
     sanity_descriptions={70:"Is that mold in the corners of the room...?\nAs you approach, you reach out and touch the wall. It's moss that's growing here on the walls", 40:"The walls seem to move like a breathing organism, and ichor seeps from cracks that have formed near the windows and doors"},
     exits={"west": "help desk office", "north": "storage room", "east": "printing department", "south": "south hallway"},
-    items=[ddr3_ram, book, workstation, broken_keyboard, bin_of_mice]
+    items=[book, workstation, broken_keyboard, bin_of_mice]
 )
 
 south_hallway = Room(
@@ -61,7 +61,7 @@ printing_department = Room(
     name="printing department",
     description="The room is empty...Norm is usually here this time of day.\nYou see the exit to the hallways to the east and the IT Department to the west",
     exits={"east": "east hallway", "west": "IT department"},
-    items=[pamphlet, poster]
+    items=[course_catalogue, poster]
 )
 
 storage_room = Room(
