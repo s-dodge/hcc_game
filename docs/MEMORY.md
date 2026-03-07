@@ -15,7 +15,7 @@ Text-based horror adventure game (Python, CLI) embedded as an easter egg in a pe
 - `game.py` - Game class: game loop, parse(), command dispatch, all handle_* methods
 - `items.py` - Item class + all item instances + `all_items` dict
 - `rooms.py` - Room class + all room instances + `all_rooms` dict + `locked_exits` set
-- `helpers.py` - `typewrite()`, `clear_screen()`, `pause()`, `display_inventory()` — no game state; `rich` (Table, Console) imported here
+- `helpers.py` - `typewrite()`, `clear_screen()`, `pause()`, `display_inventory()`, `zalgo_corrupt()`, `initiate_music()`, `toggle_music()` — no game state; `rich` (Table, Console) and `pygame.mixer` imported here
 - `docs/notes.txt` - deferred ideas (always check this)
 - `docs/project.txt` - original design brief
 - `docs/story_notes.txt` - narrative/story draft
@@ -29,8 +29,7 @@ Text-based horror adventure game (Python, CLI) embedded as an easter egg in a pe
 4. USB drive persistent state redesign (see notes.txt — stays in room, workstation.state = "displaying")
 5. Room descriptions: parking_lot, south_stairwell, campus_exit, library, kepler_theatre
 6. Plan Library and Theatre buildings
-7. MIDI soundtrack (pygame.mixer, Satie Gnossienne No. 1)
-8. Multiple endings
+7. Multiple endings
 
 ## Current Architecture
 - `Item`: name, description, aliases, takeable, untakeable_reason, usable, read_text, state, sanity_descriptions, sanity_read_texts, sanity_name (parked)
@@ -52,9 +51,16 @@ Text-based horror adventure game (Python, CLI) embedded as an easter egg in a pe
 - All narrative output uses `typewrite()`
 - `pause()` in helpers.py: waits for Enter, erases blank line with ANSI — available but not currently used
 
+## Music (implemented)
+- `assets/gnossienne_no_1.ogg` — chiptune Gnossienne No. 1, looping background music
+- `initiate_music()` called at top of `run()`: init, load, set_volume, play(loops=-1)
+- `toggle_music()`: pause/unpause toggle via `get_busy()`; `m` command in game loop
+- All pygame calls in helpers.py — game.py does not import pygame
+- Python 3.12 venv required (pygame not yet compatible with 3.14)
+
 ## use Mechanic (implemented)
 - `power cable on workstation` → workstation.state="powered", description updates, cable consumed
-- `usb drive on powered workstation` → placeholder content shown, sanity -20, drive.state="used"
+- `usb drive on powered workstation` → zalgo content shown, sanity -20, drive.state="used"
 - badge: TBD
 
 ## Story
