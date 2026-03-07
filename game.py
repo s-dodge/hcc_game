@@ -1,5 +1,7 @@
-from helpers import typewrite, clear_screen, show_title_block, set_window, display_inventory, zalgo_corrupt
+from helpers import typewrite, clear_screen, show_title_block, set_window, display_inventory, zalgo_corrupt, initiate_music, toggle_music
 import time
+
+
 
 SANITY_TIERS = [70, 40]
 
@@ -64,10 +66,14 @@ class Game:
     def run(self):
         set_window()
         clear_screen()
+
+        initiate_music()
+
         show_title_block()
         selection = input("> ").strip().lower()
         if selection == "q":
             return
+
 
         clear_screen()
         # --- Intro beats ---
@@ -111,9 +117,16 @@ class Game:
             if verb in ("q", "quit"):
                 break
 
+            elif verb in ("m", "mute"):
+                toggle_music()
+                continue
+        
+
             elif verb in ("help", "h"):
                 print("""
 Available commands:
+  mute (m)       - Toggle music on/off
+  quit (q)       - Exit the game
   go [direction] - Move in a direction (n/s/e/w also work)
   where          - Show your current location and exits
   look (l)       - Look around the current room
@@ -126,7 +139,6 @@ Available commands:
   use [item] on [item]  - Use an item on something
   leave          - Leave the current room
   help           - Show this message
-  quit (q)       - Exit the game
 """)
                 continue
 
@@ -276,7 +288,7 @@ Available commands:
                 item.state = "used"
                 typewrite("You insert the drive...\n\n")
                 typewrite(zalgo_corrupt("""\n\n
-Cahf ah nafl mglw'nafh hh' ahor syha'h ah'legeth, ng llll or'azath syha'hnahh n'ghftephai n'gha ahornah ah'mglw'nafh\n""", 3))
+Cahf ah nafl mglw'nafh hh' ahor syha'h ah'legeth, ng llll or'azath syha'hnahh n'ghftephai n'gha ahornah ah'mglw'nafh\n\n""", 3))
                 self.apply_sanity(-20)
 
 

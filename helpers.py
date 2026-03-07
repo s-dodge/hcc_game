@@ -7,6 +7,7 @@ import os
 import msvcrt
 import random
 import unicodedata
+import pygame.mixer
 
 ZALGO_UP = [chr(c) for c in range (0x0300, 0x036F)]
 ZALGO_DOWN = [chr(c) for c in range(0x0316, 0x0333)]
@@ -60,6 +61,18 @@ def set_window():
         sys.stdout.flush()
     except Exception:
         pass
+
+def initiate_music():
+        pygame.mixer.init()
+        pygame.mixer.music.load("assets/gnossienne_no_1.ogg")
+        pygame.mixer.music.set_volume(1)
+        pygame.mixer.music.play(loops=-1)
+
+def toggle_music():
+    if pygame.mixer.music.get_busy():
+        pygame.mixer.music.pause()
+    else:
+        pygame.mixer.music.unpause()
 
 def display_inventory(inventory):
     console = Console()
