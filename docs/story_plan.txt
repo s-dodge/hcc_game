@@ -72,23 +72,29 @@ PART 3: THE THING ITSELF
 What is the eldritch presence? It doesn't need a name or a clear shape —
 in fact it's scarier without one — but it needs a logic. What does it want?
 How does it work? What are its rules?
-The presence is an unnamed ancient god
+The presence is an unnamed ancient entity - something that existed before god(s)
 
 What is it?
 (ancient entity, something summoned, something that was always here, other?)
+An unknowable cosmic entity - not so much summoned. More like the way lightning will strike a rod, or the way water gathers at the lowest spot, or like celestial bodies drawn to other massive bodies
 
 What does it want?
 (consumption? worship? something stranger?)
+At some point it discovered it could know or consider itself by consuming conciousness, so it is collecting minds/souls/conciousnesses
+Cade's conciousness is still present in some way, if only the anxiety of not knowing what's happening. This anxiety may be what is transforming the environment. 
 
 What are its rules / limits?
 (what can it do? what can't it do? does it need something from the player?)
+It can influence the world in small areas (like a college campus, for example). It can cause many worlds to coexist and overlap. It can reach out through electronic means now that Cade has written some spells to disk. It cannot directly manifest or touch/interact with the world
 
-How does it manifest in the IT building vs. the library vs. the theatre?
+How does it manifest in the IT building vs. the library?
 (same entity, different face — how does it express itself in each location?)
+TBD
+
 
 Does the intern matter to it, or were they just in the way?
-The horror is wearing Al's echo like a glove. It didn't become Al — it picked him up.
-Al is still in there somewhere, just not driving. The thing knows the building, knows the
+The horror is wearing Cade's echo like a glove. It didn't become Cade— it picked him up.
+Cade is still in there somewhere, just not driving. The thing knows the building, knows the
 systems, knows how to generate a ServiceDesk ticket — not because it's intelligent, but
 because it's wearing someone who was.
 
@@ -101,13 +107,19 @@ Even one detail makes the horror land harder.
 
 Who are they in one sentence?
 (tired, underpaid, been here 8 years, doesn't want to be here today)
+They are just a helpful IT technician. They like their job, totally normal person.
+
 
 What do they want at the start of the game?
 (resolve the ticket and go home — this is the mundane goal the horror interrupts)
+They just want to help
+
 
 What do they stand to lose?
 (sanity is mechanical — but what's the human version? what would it mean to
 not make it out? is there anyone waiting for them?)
+Their worldview, their conciousness, their relative innocense
+
 
 
 ================================================================================
@@ -115,23 +127,22 @@ PART 5: THE ESCALATION MAP
 ================================================================================
 Horror should get worse as the player goes deeper. Map it across three axes:
 
-                    IT BUILDING     |    LIBRARY (LRC)    |    THEATRE
-                    (tutorial)      |    (main game)      |    (climax)
---------------------+----------------+---------------------+------------------
-KNOWLEDGE           |                |                     |
-(what player knows) |                |                     |
---------------------+----------------+---------------------+------------------
-ENVIRONMENT         |                |                     |
-(how wrong is it)   |                |                     |
---------------------+----------------+---------------------+------------------
-SANITY COST         |                |                     |
-(how much does it   |                |                     |
-drain here)         |                |                     |
+                    IT BUILDING          |    LIBRARY (LRC)
+                    (tutorial)           |    (climax)
+--------------------+---------------------+---------------------
+KNOWLEDGE           |                     |
+(what player knows) |                     |
+--------------------+---------------------+---------------------
+ENVIRONMENT         |                     |
+(how wrong is it)   |                     |
+--------------------+---------------------+---------------------
+SANITY COST         |                     |
+(how much does it   |                     |
+drain here)         |                     |
 
 Notes on escalation:
 - IT building: wrong but explainable. Could be a maintenance issue. Could be stress.
-- Library: wrong and inexplicable. No mundane explanation holds anymore.
-- Theatre: the rules don't apply here. Space, logic, and language start to fail.
+- Library: the rules don't apply here. No mundane explanation holds. Space, logic, and language start to fail.
 
 
 ================================================================================
@@ -208,34 +219,32 @@ room to the story it tells. Every item should be evidence of something.
 
 ITEM → WHAT IT REVEALS
 -----------------------
-helpdesk_workstation    : [ ]
-filing_cabinet          : [ ]
-book (Windows 11)       : [ ]
-ddr5_ram                : [ ]
-workstation             : [ ]
-broken_keyboard         : [ ]
-bin_of_mice             : [ ]
-power_cable             : [ ]
-usb_drive               : [ ]
-sticky_note             : [ ]
-keycard/badge           : [ ]
-course catalogue                : [ ]
-poster                  : [ ]
+helpdesk_workstation    : [The initial ticket]
+filing_cabinet          : [  ]
+book (Windows 11)       : [  ]
+workstation             : [  ]
+broken_keyboard         : [ "HELP" message ]
+bin_of_mice             : [ Sanity check ]
+power_cable             : [ Powers on Workstation ]
+usb_drive               : [ Reveals strange text ]
+sticky_note             : [  ]
+keycard/badge           : [ allows access (TBD) ]
+course catalogue        : [  ]
+poster                  : [ sanity check ]
 
 ROOM → WHAT IT REVEALS / WHAT HAPPENED HERE
 --------------------------------------------
-help desk office        : [ ]
-IT department           : [ ]
-storage room            : [ ]
-printing department     : [ ]
-east hallway            : [ ]
-south hallway           : [ ]
-atrium                  : [ ]
-parking lot             : [ ]
-south stairwell         : [ ]
-campus exterior         : [ ]
-library (LRC)           : [ ] (plan TBD)
-kepler theatre          : [ ] (plan TBD)
+help desk office        : [ Start ]
+IT department           : [ Things are strange ]
+storage room            : [  ]
+printing department     : [  ]
+east hallway            : [  ]
+south hallway           : [  ]
+atrium                  : [  ]
+parking lot             : [  ]
+south stairwell         : [  ]
+campus exterior         : [ N/A | Inaccessible ]
+library (LRC)           : [  ] (plan TBD)
 
 
 ================================================================================
@@ -243,8 +252,5 @@ PART 10: OPEN QUESTIONS / THINGS TO DECIDE
 ================================================================================
 Use this section as a scratch pad for things you're not sure about yet.
 
-- The intern is either totally hapless and innocently pulled into this (found artifact), or 100% a dyed-in-the-wool cultist (neophite, untrained but eager, placed artifact). Maybe they read "The King in Yellow" too closely.
-  -If innocent, who did place the artifact?
-- I think it's funnier if the Help Desk Player actually really loves their job and loves being there - this may be harder to write narratively
 - Does the library exist in some sort of temporally dissonant space - like the decor is familiar but the computers are all from 1992 (like the kind that may have an A:\ drive and floppy disk reader, perhaps)
 - Maybe they tried the USB first and it didn't work the way they needed it to, they needed some other storage media, which is where the floppy will come in.

@@ -1,4 +1,4 @@
-from helpers import typewrite, clear_screen, show_title_block, set_window, display_inventory, zalgo_corrupt, initiate_music, toggle_music
+from helpers import typewrite, clear_screen, show_title_block, set_window, display_inventory, zalgo_corrupt, initiate_music, toggle_music, article
 import time
 
 
@@ -57,10 +57,11 @@ class Game:
         # Always show items and exits
         if room.items:
             if len(room.items) == 1:
-                typewrite(f"\nYou see a {room.items[0].name}.")
+                typewrite(f"\nYou see {article(room.items[0].name)} {room.items[0].name}.")
             else:
-                all_but_last = ', a '.join(item.name for item in room.items[:-1])
-                typewrite(f"\nYou see a {all_but_last} and a {room.items[-1].name}.")
+                all_but_last = ', '.join(f"{article(item.name)} {item.name}" for item in room.items[:-1])
+                last = room.items[-1]
+                typewrite(f"\nYou see {all_but_last} and {article(last.name)} {last.name}.")
         typewrite(f"\nExits: {self.exit_labels(room)}")
 
     def run(self):
@@ -78,11 +79,11 @@ class Game:
         clear_screen()
         # --- Intro beats ---
         typewrite("The morning is gray and cold, and rain patters lightly on the roof of the building and runs in slow rivulets down the window of your office.\n\n")
-        typewrite("You hear the hum of the heating system running behind the walls, and the boredom of the mid-semester is dragging the inexorable march of time down to a crawl.\n\n")  
+        typewrite("The heating system hums behind the walls, and the boredom of the mid-semester is dragging the inexorable march of time down to a crawl.\n\n")  
         typewrite("A notification appears in the corner of your monitor. A ServiceDesk ticket has been assigned to you.\n\n")
         typewrite("The subject reads: \"Urgent - Password reset needed IN PERSON at the LRC. Can't get my work done. Send someone now if possible\"\n\n")
         typewrite("At least this ticket has come up so you can take a walk...\n\n")
-        typewrite("You stand and look at the door to the east. It leads to the main IT department office.\n")  # add as many typewrite() lines as you need
+        typewrite("As you stand to leave and look out to the hallway of the IT department, a sudden pit forms in your stomach; an uneasy feeling of anxiety and nausea...\n")  # add as many typewrite() lines as you need
 
         # Mark as visited so returning here later shows the brief revisit version
         self.player.location.visited = True
@@ -91,10 +92,11 @@ class Game:
         room = self.player.location
         if room.items:
             if len(room.items) == 1:
-                typewrite(f"\nYou see a {room.items[0].name}.")
+                typewrite(f"\nYou see {article(room.items[0].name)} {room.items[0].name}.")
             else:
-                all_but_last = ', a '.join(item.name for item in room.items[:-1])
-                typewrite(f"\nYou see a {all_but_last} and a {room.items[-1].name}.")
+                all_but_last = ', '.join(f"{article(item.name)} {item.name}" for item in room.items[:-1])
+                last = room.items[-1]
+                typewrite(f"\nYou see {all_but_last} and {article(last.name)} {last.name}.")
         typewrite(f"\nExits: {self.exit_labels(room)}")
 
         while True:
@@ -110,7 +112,9 @@ class Game:
             # Normalize multi-word verb phrases
             raw = raw.replace("pick up ", "take ", 1)
             raw = raw.replace("look at ", "examine ", 1)
-            raw = raw.replace("check out ", "examine", 1)
+            raw = raw.replace("look in ", "examine ", 1)
+            raw = raw.replace("look inside ", "examine ", 1)
+            raw = raw.replace("check out ", "examine ", 1)
 
             verb, noun = self.parse(raw)
 
@@ -147,7 +151,9 @@ Available commands:
             elif verb in ("s", "south"): verb, noun = "go", "south"
             elif verb in ("e", "east"):  verb, noun = "go", "east"
             elif verb in ("w", "west"):  verb, noun = "go", "west"
+            elif verb == "i":            verb = "inventory"
             elif verb == "x":            verb = "examine"
+            elif verb == "open":         verb = "examine"
             elif verb == "l":            verb = "look"
             elif verb == "get":          verb = "take"
             elif verb == "grab":         verb = "take"
@@ -155,6 +161,7 @@ Available commands:
             elif verb == "head":         verb = "go"
             elif verb == "crawl":        verb = "go"
             elif verb == "run":          verb = "go"
+            elif verb == "exit":         verb = "leave"
 
             # Dispatch
             if verb == "go":                    self.handle_go(noun)
@@ -165,9 +172,8 @@ Available commands:
             elif verb == "drop":                self.handle_drop(noun)
             elif verb == "read":                self.handle_read(noun)
             elif verb == "use":                 self.handle_use(noun)
-            elif verb in ("inventory", "i"):    self.handle_inventory()
+            elif verb == "inventory":           self.handle_inventory()
             elif verb == "leave":               self.handle_leave()
-            elif verb == "exit":                self.handle_leave()
             # DEBUG / HELPERS
             elif verb == "whoami":              print(f"[DEBUG] sanity={self.player.sanity}")
             elif verb == "setsanity":           self.player.sanity = max(0, min(100, int(noun)))

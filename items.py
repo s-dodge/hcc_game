@@ -53,6 +53,14 @@ filing_cabinet = Item(
     aliases=["cabinet", "drawers"]
 )
 
+office_phone = Item(
+    name="office phone",
+    description="Your office phone. Are you calling someone?",
+    takeable=False,
+    untakeable_reason="it's wired to the wall",
+    aliases=["phone","telephone"]
+)
+
 # IT DEPARTMENT
 book = Item(
     name="book",

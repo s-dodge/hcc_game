@@ -65,7 +65,7 @@ def set_window():
 def initiate_music():
         pygame.mixer.init()
         pygame.mixer.music.load("assets/gnossienne_no_1.ogg")
-        pygame.mixer.music.set_volume(1)
+        pygame.mixer.music.set_volume(.2)
         pygame.mixer.music.play(loops=-1)
 
 def toggle_music():
@@ -73,6 +73,9 @@ def toggle_music():
         pygame.mixer.music.pause()
     else:
         pygame.mixer.music.unpause()
+
+def article(name):
+    return "an" if name[0].lower() in "aeiou" else "a"
 
 def display_inventory(inventory):
     console = Console()

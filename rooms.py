@@ -34,7 +34,7 @@ help_desk_office = Room(
     name="help desk office",
     description="Your office - a small room in the main IT department. It's cold in here today, and quiet.",
     exits={"east": "IT department"},
-    items=[helpdesk_workstation, filing_cabinet]
+    items=[helpdesk_workstation, filing_cabinet, office_phone]
 )
 
 it_department = Room(
@@ -54,7 +54,7 @@ south_hallway = Room(
 east_hallway = Room(
     name="east hallway",
     description="The hallway is empty. Where is everyone...?\nYou see the Printing Department to the west and the Atrium to the south",
-    exits={"west": "printing department", "south": "atrium"}
+    exits={"west": "printing department","south": "atrium"}
 )
 
 printing_department = Room(

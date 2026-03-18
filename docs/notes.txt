@@ -70,6 +70,13 @@ SANITY EFFECTS
   - 50-26: "The title has changed. It now reads 'The Necronomicon: Inside Out'. The pages are warm to the touch." (wrong)
   - 25-0: Inventory name changes from "book" → "grimoire". "The grimoire writhes in your hands. The text is written in a language that predates human civilization. You understand every word." (incomprehensible)
 
+PHONE (help desk office)
+- A desk phone in the help desk office; player can `use phone` or `call [number]` to dial
+- Accepts freeform number input — player types whatever they want
+- Specific numbers trigger specific responses (spooky content TBD); unknown numbers get a dead tone or no answer
+- Possible uses: call an extension that rings somewhere in the building, call a number found on a note, dial 0 for operator and get something wrong
+- Mechanically: `use phone` prompts "What number do you dial?" then branches on input
+
 HELPDESK TOOL INTEGRATION (easter egg trigger)
 - Option "666" in main menu - most on-theme for horror
 - Hitting Enter on empty input - elegant/mysterious, could show fake error: "ERROR: Invalid input. Redirecting..."
@@ -106,6 +113,13 @@ SCREEN FLICKER
 - Best candidate: ANSI reverse video (`\033[?5h` / `\033[?5l`) toggled rapidly in a loop
 - Fallback: color flash with background fill if ANSI mode unsupported on target terminal
 - Lives in helpers.py alongside typewrite()
+
+INFINITE ROOM (easter egg)
+- A pitch-black room where all exits loop back to itself — the player walks forever
+- Mechanically: all exits in the room dict point to the same room; per-move sanity drain; cycling descriptions that subtly shift each visit
+- Intended as a hidden easter egg, not on the critical path — frustration is the point for anyone who finds it
+- Exit condition options (TBD): item-gated (use a specific item to escape), counter-based (exit appears after N moves), sanity-gated (horror lets you leave once broken enough), or command-based (unexpected verb like `wait` or `sit`)
+- Candidate location: somewhere in the Library, off the beaten path
 
 MISCELLANEOUS THOUGHTS
 - Add out of place item, something that doesn't belong in at IT deparment, like a Brass Key "Your fingers tingle as you pick up the ornate brass key. It's almost as if the key were vibrating at a high frequency..."
