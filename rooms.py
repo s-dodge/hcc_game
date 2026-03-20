@@ -54,12 +54,13 @@ south_hallway = Room(
 east_hallway = Room(
     name="east hallway",
     description="The hallway is empty. Where is everyone...?\nYou see the Printing Department to the west and the Atrium to the south",
-    exits={"west": "printing department","south": "atrium"}
+    exits={"west": "printing department","south": "atrium", "east":"IT closet"},
+    items=[badge_reader]
 )
 
 printing_department = Room(
     name="printing department",
-    description="The room is empty...Norm is usually here this time of day.\nYou see the exit to the hallways to the east and the IT Department to the west",
+    description="The room is empty...Norman is usually here this time of day.\nYou see the exit to the hallways to the east and the IT Department to the west",
     exits={"east": "east hallway", "west": "IT department"},
     items=[course_catalogue, poster]
 )
@@ -68,7 +69,7 @@ storage_room = Room(
     name="storage room",
     description="The walls are lined with shelves of assets...power cables, monitors, laptop bags, network switches, and unnameable layer 3 devices.\n The only exit is south, back to the IT Department.",
     exits={"south": "IT department"},
-    items=[power_cable, usb_drive, sticky_note, badge]
+    items=[power_cable, sticky_note, badge, asset_log]
 )
 
 atrium = Room(
@@ -88,6 +89,14 @@ south_stairwell = Room(
     name="south stairwell",
     description="",
     exits={"north": "south hallway", "south": "exit"}
+)
+
+it_closet = Room(
+    name="IT closet",
+    description="The air in the closet is heavy and stale. The walls are cluttered by racks and panels, and patch cables cross each other in tangles as switch lights blink on and off. Some of the patch cables look strange...\n\nAs you look closer, the cables are chunks of hair, and others look like plant roots or...fungal threads?",
+    exits={"west": "east hallway"},
+    items=[usb_drive]
+
 )
 
 campus_exit = Room(
@@ -133,11 +142,12 @@ all_rooms = {
     "exit": campus_exit,
     "library": library,
     "kepler theatre": kepler_theatre,
+    "IT closet": it_closet
 }
 
 locked_exits = {
-    ("south hallway", "west"),
-    ("south stairwell", "south"),
-    ("atrium", "south")
-    
+    ("south hallway", "west"), #PARKING LOT
+    ("south stairwell", "south"), #EXIT 
+    ("atrium", "south"), #EXIT
+    ("east hallway", "east") #IT CLOSET
 }

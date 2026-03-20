@@ -75,6 +75,8 @@ def toggle_music():
         pygame.mixer.music.unpause()
 
 def article(name):
+    if not name:
+        return "a"
     return "an" if name[0].lower() in "aeiou" else "a"
 
 def display_inventory(inventory):

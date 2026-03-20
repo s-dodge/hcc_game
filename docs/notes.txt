@@ -123,11 +123,17 @@ INFINITE ROOM (easter egg)
 
 MISCELLANEOUS THOUGHTS
 - Add out of place item, something that doesn't belong in at IT deparment, like a Brass Key "Your fingers tingle as you pick up the ornate brass key. It's almost as if the key were vibrating at a high frequency..."
-- Ancient object / sanity trigger: a floppy disk in the IT closet (plausible in old IT storage, "ancient technology" joke earns it)
-  - Placed behind the IT closet door, unlocked with badge — gated far enough into tutorial that horror has had time to simmer first
-  - Floppy disk has a handwritten label; examine before taking returns "There's a handwritten label on it. You try to read it, but your eyes keep sliding off the text."
-  - Transformation triggers on second examine (after taking): the label is now legible — in something that isn't a human alphabet. Sanity hit fires here.
+IT CLOSET
+- New room off IT department (or storage room — TBD), gated with badge reader
+- Door description should clearly indicate a badge reader so player knows what's needed
+- Contains: usb_drive (moved from storage room), floppy_disk, possibly external floppy reader
+- External floppy reader placement TBD: IT department (natural pairing with workstation) or IT closet itself
+- Floppy disk / sanity trigger:
+  - Plausible in old IT storage; "ancient technology" joke earns it
+  - Handwritten label; first examine: "There's a handwritten label on it. You try to read it, but your eyes keep sliding off the text."
+  - Transformation triggers on second examine (after taking): label is now legible — in something that isn't a human alphabet. Sanity hit fires here.
   - examine → take → examine again is the intended beat sequence; transformation on take is too abrupt
+  - Requires examined/state flag on the item to track whether player has looked at it before
 
 THE INTERN
 - The IT intern is a cultist (or was one)

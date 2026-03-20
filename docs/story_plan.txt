@@ -236,7 +236,7 @@ ROOM → WHAT IT REVEALS / WHAT HAPPENED HERE
 --------------------------------------------
 help desk office        : [ Start ]
 IT department           : [ Things are strange ]
-storage room            : [  ]
+storage room            : [ Items ]
 printing department     : [  ]
 east hallway            : [  ]
 south hallway           : [  ]

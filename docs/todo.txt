@@ -1,0 +1,31 @@
+TO DO
+=====
+Roughly in priority order.
+
+IT CLOSET (in progress)
+- [X] Add IT closet Room instance in rooms.py
+- [X] Wire exit from East Hallway to closet + reverse exit
+- [X] Add locked exit tuple to locked_exits
+- [X] Move usb_drive placement to closet (remove from storage room)
+- [X] Write closet room description (mention badge reader on the door)
+- [ ] Add floppy_disk Item to items.py (see notes.txt for beat sequence)
+- [ ] Place floppy_disk and external floppy reader in closet (reader TBD location)
+- [ ] Badge unlock mechanic: use badge on [door/closet/badge reader] removes locked exit tuple
+
+ROOM DESCRIPTIONS
+- [ ] Finish sanity-tiered descriptions for atrium (currently placeholders)
+- [ ] Write descriptions for all stub rooms: parking_lot, south_stairwell, campus_exit, library, kepler_theatre
+
+ITEMS
+- [ ] sanity_cost on examine for items that should drain sanity
+- [ ] Item.inventory_description attribute (see notes.txt)
+- [ ] USB drive persistent state redesign (see notes.txt — stays in room, workstation.state = "displaying")
+- [ ] Floppy disk two-examine mechanic (state/examined flag)
+
+PUZZLE CHAIN
+- [ ] Badge/keycard unlock mechanic (use badge on door)
+- [ ] External floppy reader + floppy disk puzzle (read floppy → sanity hit)
+
+STORY / CONTENT
+- [ ] Write office phone interactions (see notes.txt)
+- [ ] Decide intern backstory: true believer / victim / stumbled in (see notes.txt)

@@ -1,7 +1,8 @@
 class Item:
-    def __init__(self, name, description, sanity_name=None, aliases=None, read_text=None, takeable=True, untakeable_reason=None, usable=False, state=None, sanity_descriptions=None, sanity_read_texts=None):
+    def __init__(self, name, description, listed=True, sanity_name=None, aliases=None, read_text=None, takeable=True, untakeable_reason=None, usable=False, state=None, sanity_descriptions=None, sanity_read_texts=None):
         self.name = name
         self.description = description
+        self.listed = listed
         self.sanity_name = sanity_name if sanity_name is not None else ""
         self.aliases = aliases if aliases is not None else []
         self.read_text = read_text
@@ -55,7 +56,7 @@ filing_cabinet = Item(
 
 office_phone = Item(
     name="office phone",
-    description="Your office phone. Are you calling someone?",
+    description="Your office phone - no missed calls and the line light is dark. As you lift the handset to your ear, under the dial-tone, barely audible, it sounds like someone is whispering...",
     takeable=False,
     untakeable_reason="it's wired to the wall",
     aliases=["phone","telephone"]
@@ -112,15 +113,19 @@ power_cable = Item(
 badge = Item(
     name="badge",
     description="It's the IT intern's badge.",
-    aliases=["id badge", "keycard"]
-)
-
-usb_drive = Item(
-    name="usb drive",
-    description="A standard 64GB usb drive. What could be on it...?",
-    aliases=["drive", "usb"],
+    aliases=["id badge", "keycard"],
     usable=True
 )
+
+asset_log = Item(
+    name="asset log",
+    description="It's a log for signing out assets. Some of the entries seem strange.",
+    read_text="",
+    aliases=["log", "sign out sheet"],
+    takeable=False,
+    untakeable_reason="it's laminated to the wall"
+)
+
 
 sticky_note = Item(
     name="sticky note",
@@ -147,9 +152,35 @@ poster = Item(
     description="It's a poster for Student Activities this summer\nThere's something strange about the students faces...you can't quite put your finger on it."
 )
 
+
+# IT CLOSET
+usb_drive = Item(
+    name="usb drive",
+    description="A standard 64GB usb drive. What could be on it...?",
+    aliases=["drive", "usb"],
+    usable=True
+)
+
+
+#TO BE PLACED
+floppy_disk = Item(
+    name="floppy disk",
+    description="",
+    aliases=["disk","floppy"]
+)
+
 # ATRIUM
 
 # EAST HALLWAY
+
+badge_reader = Item(
+    name="badge reader",
+    description="The door handle has an integrated badge-reader. The light is red.",
+    aliases=["door","reader","lock","closet","closet door", "it closet door"],
+    takeable=False,
+    untakeable_reason="it's mounted to the door",
+    listed=False
+)
 
 # SOUTH HALLWAY
 

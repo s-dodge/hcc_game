@@ -54,13 +54,14 @@ class Game:
         else:
             print("[You've been here before]")
 
-        # Always show items and exits
-        if room.items:
-            if len(room.items) == 1:
-                typewrite(f"\nYou see {article(room.items[0].name)} {room.items[0].name}.")
+        # Show visible items and exits
+        listed_items = [item for item in room.items if item.listed]
+        if listed_items:
+            if len(listed_items) == 1:
+                typewrite(f"\nYou see {article(listed_items[0].name)} {listed_items[0].name}.")
             else:
-                all_but_last = ', '.join(f"{article(item.name)} {item.name}" for item in room.items[:-1])
-                last = room.items[-1]
+                all_but_last = ', '.join(f"{article(item.name)} {item.name}" for item in listed_items[:-1])
+                last = listed_items[-1]
                 typewrite(f"\nYou see {all_but_last} and {article(last.name)} {last.name}.")
         typewrite(f"\nExits: {self.exit_labels(room)}")
 
@@ -90,12 +91,13 @@ class Game:
 
         # Show items and exits to hand off to gameplay
         room = self.player.location
-        if room.items:
-            if len(room.items) == 1:
-                typewrite(f"\nYou see {article(room.items[0].name)} {room.items[0].name}.")
+        listed_items = [item for item in room.items if item.listed]
+        if listed_items:
+            if len(listed_items) == 1:
+                typewrite(f"\nYou see {article(listed_items[0].name)} {listed_items[0].name}.")
             else:
-                all_but_last = ', '.join(f"{article(item.name)} {item.name}" for item in room.items[:-1])
-                last = room.items[-1]
+                all_but_last = ', '.join(f"{article(item.name)} {item.name}" for item in listed_items[:-1])
+                last = listed_items[-1]
                 typewrite(f"\nYou see {all_but_last} and {article(last.name)} {last.name}.")
         typewrite(f"\nExits: {self.exit_labels(room)}")
 
@@ -196,7 +198,10 @@ Available commands:
         room = self.player.location
         if noun in room.exits:
             if (room.name, noun) in self.locked_exits:
-                typewrite("The door is locked. Strange...these doors aren't normally locked from the inside...")
+                if (room.name, noun) == ("east hallway", "east"):
+                    typewrite("The door is locked. The light on the badge reader next to the handle blinks red.")
+                else:
+                    typewrite("The door is locked. Strange...these doors aren't normally locked from the inside...")
             else:
                 self.player.location = self.rooms[room.exits[noun]]
                 self.display_room(self.player.location)
@@ -270,12 +275,14 @@ Available commands:
             return
 
         target = self.player.location.get_item(target_name) if target_name else None
+        
         if target_name and not target:
             typewrite(f"You don't see a {target_name} here.")
             return
 
         # --- Specific use cases ---
 
+        # POWER CABLE
         if item.name == "power cable" and target and target.name == "workstation":
             if target.state == "powered":
                 typewrite("It's already plugged in.")
@@ -284,7 +291,7 @@ Available commands:
                 target.description = "The workstation hums quietly. The screen glows."  # update examine text
                 self.player.inventory.remove(item)
                 typewrite("You plug in the power cable. The workstation flickers on.")
-
+        #USB DRIVE
         elif item.name == "usb drive" and target and target.name == "workstation":
             if target.state != "powered":
                 typewrite("The workstation isn't on.")
@@ -297,6 +304,13 @@ Available commands:
 Cahf ah nafl mglw'nafh hh' ahor syha'h ah'legeth, ng llll or'azath syha'hnahh n'ghftephai n'gha ahornah ah'mglw'nafh\n\n""", 3))
                 self.apply_sanity(-20)
 
+        #BADGE
+        elif item.name == "badge" and target and target.name == "badge reader":
+            if ("east hallway", "east") not in self.locked_exits:
+                typewrite("The door is unlocked")
+            else:
+                self.locked_exits.discard(("east hallway", "east"))
+                typewrite("The door clicks faintly as the magnetic lock disengages. Something in the air of the hallway changes, almost imperceptibly. It's a feeling more than anything.")
 
         elif not item.usable:
             typewrite("You can't use this item.")        
